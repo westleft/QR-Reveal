@@ -18,6 +18,14 @@ declare namespace chrome {
         ) => void
       ): void;
     };
+    
+    const sendMessage: {
+      (message: any, callback?: (response: any) => void): void;
+    };
+    
+    const onInstalled: {
+      addListener(callback: (details: any) => void): void;
+    };
   }
   
   namespace tabs {
@@ -26,5 +34,23 @@ declare namespace chrome {
       url?: string;
       title?: string;
     }
+    
+    const sendMessage: {
+      (tabId: number, message: any, callback?: (response: any) => void): void;
+    };
   }
-} 
+  
+  namespace contextMenus {
+    const create: {
+      (createProperties: {
+        id: string;
+        title: string;
+        contexts: string[];
+      }): void;
+    };
+    
+    const onClicked: {
+      addListener(callback: (info: any, tab?: chrome.tabs.Tab) => void): void;
+    };
+  }
+}
