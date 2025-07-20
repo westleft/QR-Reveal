@@ -10,13 +10,16 @@
     "activeTab",
     "contextMenus"
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
-    "service_worker": "src/background.ts"
+    "service_worker": "src/apps/background/index.ts"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/content.ts"]
+      "js": ["src/apps/content/index.ts"]
     }
   ]
 }
