@@ -1,10 +1,15 @@
 enum ContentMessageAction {
   OpenModal = 'openModal',
-  FetchWebsiteTitle = 'fetchWebsiteTitle',
+  VaildQRCode = 'vaildQRCode',
+  Notify = 'notify',
 }
 
-enum BackgroundMessageAction {
-  DetectQRCode = 'detectQRCode',
+interface WebsiteInfo {
+  title?: string
+  description?: string
+  image?: string
+  qrcodeUrl?: string
+  url?: string
 }
 
 interface MessageWrapper<U, T> {
@@ -12,6 +17,19 @@ interface MessageWrapper<U, T> {
   data: T
 }
 
+type VaildQRCodeRequest = MessageWrapper<
+  ContentMessageAction.VaildQRCode,
+  { imageUrl: string }
+>
 
+type OpenModalRequest = MessageWrapper<
+  ContentMessageAction.OpenModal,
+  WebsiteInfo
+>
 
-export type { MessageWrapper }
+type NotifyRequest = MessageWrapper<
+  ContentMessageAction.Notify,
+  { message: string }
+>
+
+export type { MessageWrapper, VaildQRCodeRequest, OpenModalRequest, WebsiteInfo, NotifyRequest }

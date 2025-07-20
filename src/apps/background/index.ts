@@ -1,14 +1,11 @@
-interface QRCodeResult {
-  success: boolean
-  data:  string
-}
+import { fetchWebsite } from '@/utils'
 
 // 創建右鍵選單
 chrome.runtime.onInstalled.addListener(() => {
   // 創建圖片右鍵選單
   chrome.contextMenus.create({
-    id: 'detect-qr-code',
-    title: '偵測 QR 碼',
+    id: 'detectQRcode',
+    title: '偵測 QR Code',
     contexts: ['image']
   });
 })
@@ -17,20 +14,38 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   const { id: tabId } = tab || {}
 
-  if (info.menuItemId === 'detect-qr-code' && tabId) {
+  if (info.menuItemId === 'detectQRcode' && tabId) {
     chrome.tabs.sendMessage(tabId, {
         action: 'vaildQRCode',
-        imageUrl: info.srcUrl
-      },(response: QRCodeResult) => {
+        data: {
+          imageUrl: info.srcUrl
+        }
+      },(response) => {
         if (!response.success) {
           console.error('這不是 QR Code')
+          chrome.tabs.sendMessage(tabId, {
+            action: 'notify',
+            data: {
+              message: 'QR Code 偵測失敗'
+            }
+          })
           return
         }
 
         fetchWebsite(response.data).then((data) => {
           chrome.tabs.sendMessage(tabId, {
             action: 'openModal',
-            data
+            data: {
+              ...data,
+              qrcodeUrl: info.srcUrl,
+              url: response.data
+            }
+          })
+        }).catch((error) => {
+          console.error('QR Code 偵測失敗', error)
+          chrome.tabs.sendMessage(tabId, {
+            action: 'notify',
+            data: { message: '取得網站資料失敗' }
           })
         })
       }
@@ -46,26 +61,3 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 //     sendResponse({ status: 'received' });
 //   }
 // });
-
-// 獲取網站標題的函數
-async function fetchWebsite(url: string) {
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-    });
-
-    const html = await response.text();
-    const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-    const descriptionMatch = html.match(/<meta name="description" content="([^"]+)"/i);
-    const imageMatch = html.match(/<meta property="og:image" content="([^"]+)"/i);
-
-    return {
-      title: titleMatch?.[1]?.trim(),
-      description: descriptionMatch?.[1]?.trim(),
-      image: imageMatch?.[1]?.trim()
-    }
-  } catch (error) {
-    console.error('error：', error)
-    throw error;
-  }
-}

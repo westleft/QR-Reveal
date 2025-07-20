@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { onBeforeMount, inject, ref } from 'vue'
-import type { QRCodeResult } from '../../utils'
+import { inject } from 'vue'
+import type { WebsiteInfo } from '@/types'
 
-const hasQRCode = inject<QRCodeResult>('hasQRCode')
-const websiteTitle = ref<string>('')
-const websiteUrl = ref<string>('')
-const isLoading = ref<boolean>(false)
-const error = ref<string>('')
+const data = inject<WebsiteInfo>('data')
 
 function closeModal() {
   const modal = document.getElementById('qr-code-modal')
@@ -14,44 +10,27 @@ function closeModal() {
     modal.remove()
   }
 }
-
-function fetchWebsiteTitle(url: string) {
-  chrome.runtime.sendMessage({
-    action: 'fetchWebsiteTitle',
-    url: url
-  })
-}
-
-onBeforeMount(async () => {
-  const title = await fetchWebsiteTitle(hasQRCode?.data || '')
-  console.log('Fetched title:', title)
-})
-
 </script>
 
 <template>
   <div @click.self="closeModal" class="modal">
     <div class="modal-content">
-      <h1>QR Code Website</h1>
-      <div class="website-info">
-        <div class="info-item">
-          <p><strong>URL:</strong></p>
-          <p class="url-text">{{ websiteUrl || 'No URL found' }}</p>
-        </div>
+      <div class="modal-info">
+        <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image" />
 
-        <div v-if="isLoading" class="loading">
-          <p>Loading website title...</p>
-        </div>
-
-        <div v-else-if="websiteTitle" class="info-item">
-          <p><strong>Title:</strong></p>
-          <p class="title-text">{{ websiteTitle }}</p>
-        </div>
-
-        <div v-if="error" class="error-message">
-          <p>{{ error }}</p>
-        </div>
-
+        <a target="_blank" :href="data?.url" class="modal-info__content">
+          <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
+          <div v-else class="image__placeholder">
+            <p>image not found</p>
+          </div>
+          <p class="modal-info__title">
+            {{ data?.title || 'No title' }}
+          </p>
+          <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
+          <div class="modal-info__btn">
+            <button>前往連結</button>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -76,71 +55,88 @@ onBeforeMount(async () => {
   border-radius: 12px !important;
   padding: 20px;
   color: #666;
-  max-width: 500px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
+  overflow: hidden;
+  gap: 12px;
+  max-width: 600px !important;
 }
 
-.website-info {
-  margin-top: 15px;
-}
-
-.info-item {
-  margin-bottom: 15px;
-}
-
-.title-text {
-  background-color: #f5f5f5;
-  padding: 10px;
-  border-radius: 6px;
-  word-break: break-all;
-  margin: 5px 0;
-  font-weight: 500;
-}
-
-.url-text {
-  background-color: #f0f8ff;
-  padding: 10px;
-  border-radius: 6px;
-  word-break: break-all;
-  margin: 5px 0;
-  font-family: monospace;
-  font-size: 12px;
-}
-
-.loading {
-  text-align: center;
-  color: #666;
-  margin: 15px 0;
-}
-
-.error-message {
-  color: #dc3545;
-  margin-top: 15px;
-  background-color: #f8d7da;
-  padding: 10px;
-  border-radius: 6px;
-}
-
-.actions {
+.modal-info {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  width: 100%;
+
+  .modal-info__content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px !important;
+    cursor: pointer;
+    min-width: 300px;
+  }
+
+  .modal-info__qrcode {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    margin-right: 12px;
+  }
+
+  .modal-info__title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+
+  .modal-info__description {
+    font-size: 14px;
+    color: #666;
+    padding: 0px !important;
+    margin: 0px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+
+  .modal-info__image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .modal-info__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 12px;
+    button {
+      border: none;
+      background-color: #000;
+      color: #fff;
+      padding: 8px 24px !important;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+  }
 }
 
-.copy-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  flex: 1;
+.image__placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 140px !important;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  color: #666 !important;
 }
 
-.copy-btn:hover {
-  background-color: #0056b3;
-}
 </style>
