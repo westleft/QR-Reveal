@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import path from 'node:path'
 import { crx } from '@crxjs/vite-plugin'
+import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 import zip from 'vite-plugin-zip-pack'
 import manifest from './manifest.json'
-import path from 'path'
 
 export default defineConfig({
   plugins: [
@@ -15,19 +15,19 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: 'index.html',
-        background: 'src/apps/background/index.ts'
-      }
-    }
+        background: 'src/apps/background/index.ts',
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   server: {
     port: 5173,
     hmr: {
-      port: 5173
-    }
-  }
+      port: 5173,
+    },
+  },
 })

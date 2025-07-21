@@ -26,5 +26,12 @@ export default antfu({
   ignores: [
     '**/fixtures',
     // ...globs
-  ]
+  ],
+  rules: {
+    'vue/attribute-hyphenation': 'off',
+    'ts/consistent-type-definitions': 'off',
+    'vue/html-self-closing': 'off',
+    'style/brace-style': 'off',
+    'ts/explicit-function-return-type': 'off',
+  },
 })
