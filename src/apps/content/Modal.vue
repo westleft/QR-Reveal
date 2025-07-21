@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { inject } from 'vue'
 import type { WebsiteInfo } from '@/types'
+import { inject } from 'vue'
 
 const data = inject<WebsiteInfo>('data')
 
@@ -13,10 +13,10 @@ function closeModal() {
 </script>
 
 <template>
-  <div @click.self="closeModal" class="modal">
+  <div class="modal" @click.self="closeModal">
     <div class="modal-content">
       <div class="modal-info">
-        <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image" />
+        <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image">
 
         <a target="_blank" :href="data?.url" class="modal-info__content">
           <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
@@ -138,5 +138,4 @@ function closeModal() {
   border-radius: 12px;
   color: #666 !important;
 }
-
 </style>

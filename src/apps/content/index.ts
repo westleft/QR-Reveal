@@ -1,11 +1,11 @@
-import Modal from './Modal.vue'
+import type { NotifyRequest, OpenModalRequest, VaildQRCodeRequest } from '@/types'
+import Toastify from 'toastify-js'
 import { createApp } from 'vue'
 import { validateQRCode } from '@/utils'
-import type { VaildQRCodeRequest, OpenModalRequest, NotifyRequest } from '@/types'
-import "toastify-js/src/toastify.css"
-import Toastify from "toastify-js"
+import Modal from './Modal.vue'
+import 'toastify-js/src/toastify.css'
 // 監聽來自 background script 的消息
-chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {  
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   const { action } = request
 
   if (action === 'vaildQRCode') {
@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     const app = createApp(Modal)
     app.provide('data', data)
     app.mount(modal)
-  } 
+  }
 
   if (action === 'notify') {
     const { data: { message } } = request as NotifyRequest
@@ -35,8 +35,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
       position: 'right',
       style: {
         background: 'red',
-      }
+      },
     }).showToast()
   }
 })
-
