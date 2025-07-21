@@ -7,24 +7,6 @@ interface QRCodeResult {
   error?: string;
 }
 
-interface ImageProcessingConfig {
-  crossOrigin: string;
-  inversionAttempts: "dontInvert" | "attemptBoth" | "invertFirst";
-}
-
-// Constants
-const DEFAULT_CONFIG: ImageProcessingConfig = {
-  crossOrigin: 'anonymous',
-  inversionAttempts: "dontInvert",
-};
-
-// Error messages
-const ERROR_MESSAGES = {
-  CANVAS_CONTEXT_FAILED: 'Could not get canvas context',
-  IMAGE_LOAD_FAILED: 'Failed to load image',
-  NO_QR_CODE_FOUND: 'No QR code found in image',
-} as const;
-
 /**
  * Creates a canvas element and gets its 2D context
  * @returns CanvasRenderingContext2D or null if failed
@@ -34,7 +16,7 @@ function createCanvasContext(): CanvasRenderingContext2D | null {
   const ctx = canvas.getContext('2d');
   
   if (!ctx) {
-    console.error(ERROR_MESSAGES.CANVAS_CONTEXT_FAILED);
+    console.error('createCanvasContext failed');
     return null;
   }
   
@@ -47,13 +29,12 @@ function createCanvasContext(): CanvasRenderingContext2D | null {
  * @param config - Image processing configuration
  * @returns Promise that resolves with the loaded image or rejects with error
  */
-async function loadImage(imageUrl: string, config: ImageProcessingConfig): Promise<HTMLImageElement> {
+async function loadImage(imageUrl: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = config.crossOrigin;
 
     img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(ERROR_MESSAGES.IMAGE_LOAD_FAILED));
+    img.onerror = () => reject(new Error('Error'));
     
     img.src = imageUrl;
   });
@@ -65,27 +46,10 @@ async function loadImage(imageUrl: string, config: ImageProcessingConfig): Promi
  * @param config - QR detection configuration
  * @returns QR code data if found, null otherwise
  */
-function detectQRCode(imageData: ImageData, config: ImageProcessingConfig): string | null {
-  const code = jsQR(imageData.data, imageData.width, imageData.height, {
-    inversionAttempts: config.inversionAttempts,
-  });
+function detectQRCode(imageData: ImageData): string | null {
+  const code = jsQR(imageData.data, imageData.width, imageData.height);
   
   return code ? code.data : null;
-}
-
-/**
- * Sends QR code detection result to background script
- * @param qrData - Detected QR code data
- * @param imageUrl - Original image URL
- */
-function notifyBackgroundScript(qrData: string, imageUrl: string): void {
-  chrome.runtime.sendMessage({
-    action: 'qrCodeDetected',
-    content: qrData,
-    data: {
-      imageUrl: imageUrl
-    }
-  });
 }
 
 /**
@@ -96,22 +60,19 @@ function notifyBackgroundScript(qrData: string, imageUrl: string): void {
  */
 async function validateQRCode(
   imageUrl: string, 
-  config: Partial<ImageProcessingConfig> = {}
 ): Promise<QRCodeResult> {
-  try {    
-    const finalConfig = { ...DEFAULT_CONFIG, ...config };
-    
+  try {
     // Create canvas context
     const ctx = createCanvasContext();
     if (!ctx) {
       return {
         success: false,
-        error: ERROR_MESSAGES.CANVAS_CONTEXT_FAILED
+        error: 'Canvas Context Failed'
       };
     }
     
     // Load image
-    const img = await loadImage(imageUrl, finalConfig);
+    const img = await loadImage(imageUrl);
     
     // Set canvas dimensions and draw image
     const canvas = ctx.canvas;
@@ -121,17 +82,14 @@ async function validateQRCode(
     
     // Get image data and detect QR code
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const qrData = detectQRCode(imageData, finalConfig);
-    
+    const qrData = detectQRCode(imageData);
+
     if (!qrData) {
-      console.log(ERROR_MESSAGES.NO_QR_CODE_FOUND);
       return {
         success: false,
-        error: ERROR_MESSAGES.NO_QR_CODE_FOUND
+        error: 'No QR Code Found'
       };
     }
-
-    notifyBackgroundScript(qrData, imageUrl);
     
     return {
       success: true,
@@ -139,14 +97,11 @@ async function validateQRCode(
     };
 
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    console.error('Error detecting QR code:', errorMessage);
-    
     return {
       success: false,
-      error: errorMessage
+      error: 'error'
     };
   }
 }
 
-export { validateQRCode, type QRCodeResult, type ImageProcessingConfig }
+export { validateQRCode }
