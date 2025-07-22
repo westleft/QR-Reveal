@@ -1,3 +1,8 @@
+function matchRegex(regex: RegExp, html: string) {
+  const match = html.match(regex)
+  return match?.[1]?.trim()
+}
+
 export async function fetchWebsite(url: string) {
   try {
     const response = await fetch(url, {
@@ -5,14 +10,14 @@ export async function fetchWebsite(url: string) {
     })
 
     const html = await response.text()
-    const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
-    const descriptionMatch = html.match(/<meta name="description" content="([^"]+)"/i)
-    const imageMatch = html.match(/<meta property="og:image" content="([^"]+)"/i)
+    const title = matchRegex(/<title[^>]*>([^<]+)<\/title>/i, html)
+    const description = matchRegex(/<meta name="description" content="([^"]+)"/i, html)
+    const image = matchRegex(/<meta property="og:image" content="([^"]+)"/i, html)
 
     return {
-      title: titleMatch?.[1]?.trim(),
-      description: descriptionMatch?.[1]?.trim(),
-      image: imageMatch?.[1]?.trim(),
+      title,
+      description,
+      image,
     }
   } catch (error) {
     console.error('error：', error)

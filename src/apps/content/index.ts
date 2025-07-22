@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import { validateQRCode } from '@/utils'
 import Modal from './Modal.vue'
 import 'toastify-js/src/toastify.css'
+
 // 監聽來自 background script 的消息
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   const { action } = request

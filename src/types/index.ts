@@ -32,4 +32,4 @@ type NotifyRequest = MessageWrapper<
   { message: string }
 >
 
-export type { MessageWrapper, VaildQRCodeRequest, OpenModalRequest, WebsiteInfo, NotifyRequest }
+export type { MessageWrapper, NotifyRequest, OpenModalRequest, VaildQRCodeRequest, WebsiteInfo }

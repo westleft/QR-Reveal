@@ -10,11 +10,11 @@ async function validateQRCode(
   imageUrl: string,
 ): Promise<QRCodeResult> {
   const codeReader = new BrowserQRCodeReader()
-  const image = document.createElement('img')
+  const image = new Image()
+  image.crossOrigin = 'anonymous'
   image.src = imageUrl
 
   const result = await codeReader.decodeFromImageElement(image)
-
   const data = result.getText()
 
   if (data) {
