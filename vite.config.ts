@@ -11,23 +11,16 @@ export default defineConfig({
     crx({ manifest }),
     zip({ outDir: 'release', outFileName: 'release.zip' }),
   ],
-  build: {
-    rollupOptions: {
-      input: {
-        popup: 'index.html',
-        background: 'src/apps/background/index.ts',
-      },
-    },
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
   server: {
-    port: 5173,
-    hmr: {
-      port: 5173,
+    cors: {
+      origin: [
+        /chrome-extension:\/\//,
+      ],
     },
   },
 })

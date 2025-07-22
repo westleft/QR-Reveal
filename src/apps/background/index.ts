@@ -6,7 +6,6 @@ const { sendMessage } = chrome.tabs
 
 // 創建右鍵選單
 chrome.runtime.onInstalled.addListener(() => {
-  // 創建圖片右鍵選單
   chrome.contextMenus.create({
     id: 'detectQRcode',
     title: '偵測 QR Code',

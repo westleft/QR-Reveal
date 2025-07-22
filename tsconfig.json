@@ -5,6 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "rootDir": "src",
     "lib": ["DOM", "ESNext"],
     "types": ["chrome", "node"],
     "baseUrl": ".",
