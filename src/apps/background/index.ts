@@ -1,4 +1,8 @@
-import { fetchWebsite } from '@/utils'
+import type { NotifyRequest, OpenModalRequest } from '@/types'
+import { ContentMessageAction } from '@/types'
+import { fetchWebsite, vaildIsURL } from '@/utils'
+
+const { sendMessage } = chrome.tabs
 
 // 創建右鍵選單
 chrome.runtime.onInstalled.addListener(() => {
@@ -15,7 +19,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   const { id: tabId } = tab || {}
 
   if (info.menuItemId === 'detectQRcode' && tabId) {
-    chrome.tabs.sendMessage(tabId, {
+    sendMessage(tabId, {
       action: 'vaildQRCode',
       data: {
         imageUrl: info.srcUrl,
@@ -23,8 +27,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }, (response) => {
       if (!response.success) {
         console.error('這不是 QR Code')
-        chrome.tabs.sendMessage(tabId, {
-          action: 'notify',
+        chrome.tabs.sendMessage<NotifyRequest>(tabId, {
+          action: ContentMessageAction.Notify,
           data: {
             message: 'QR Code 偵測失敗',
           },
@@ -32,10 +36,25 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         return
       }
 
-      fetchWebsite(response.data).then((data) => {
-        chrome.tabs.sendMessage(tabId, {
-          action: 'openModal',
+      const isURL = vaildIsURL(response.data)
+
+      if (!isURL) {
+        console.error('這不是 QR Code')
+        chrome.tabs.sendMessage<OpenModalRequest>(tabId, {
+          action: ContentMessageAction.OpenModal,
           data: {
+            type: 'text',
+            text: response.data,
+          },
+        })
+        return
+      }
+
+      fetchWebsite(response.data).then((data) => {
+        chrome.tabs.sendMessage<OpenModalRequest>(tabId, {
+          action: ContentMessageAction.OpenModal,
+          data: {
+            type: 'website',
             ...data,
             qrcodeUrl: info.srcUrl,
             url: response.data,
@@ -43,8 +62,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         })
       }).catch((error) => {
         console.error('QR Code 偵測失敗', error)
-        chrome.tabs.sendMessage(tabId, {
-          action: 'notify',
+        chrome.tabs.sendMessage<NotifyRequest>(tabId, {
+          action: ContentMessageAction.Notify,
           data: { message: '取得網站資料失敗' },
         })
       })

@@ -5,11 +5,13 @@ enum ContentMessageAction {
 }
 
 interface WebsiteInfo {
+  type: 'website' | 'text'
   title?: string
   description?: string
   image?: string
   qrcodeUrl?: string
   url?: string
+  text?: string
 }
 
 interface MessageWrapper<U, T> {
@@ -33,3 +35,4 @@ type NotifyRequest = MessageWrapper<
 >
 
 export type { MessageWrapper, NotifyRequest, OpenModalRequest, VaildQRCodeRequest, WebsiteInfo }
+export { ContentMessageAction }
