@@ -43,6 +43,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           action: ContentMessageAction.OpenModal,
           data: {
             type: 'text',
+            qrcodeUrl: info.srcUrl,
             text: response.data,
           },
         })

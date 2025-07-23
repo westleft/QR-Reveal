@@ -18,7 +18,7 @@ function closeModal() {
       <div class="modal-info">
         <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image">
 
-        <a target="_blank" :href="data?.url" class="modal-info__content">
+        <a v-if="data!.type === 'website'" target="_blank" :href="data?.url" class="modal-info__content">
           <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
           <div v-else class="image__placeholder">
             <p>image not found</p>
@@ -31,6 +31,11 @@ function closeModal() {
             <button>前往連結</button>
           </div>
         </a>
+        <div v-if="data!.type === 'text'" class="modal-info__content">
+          <p class="modal-info__title">
+            {{ data?.text || 'No content' }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
