@@ -4,7 +4,7 @@ enum ContentMessageAction {
   Notify = 'notify',
 }
 
-interface WebsiteInfo {
+interface QrCodeInfo {
   type: 'website' | 'text'
   title?: string
   description?: string
@@ -26,7 +26,7 @@ type VaildQRCodeRequest = MessageWrapper<
 
 type OpenModalRequest = MessageWrapper<
   ContentMessageAction.OpenModal,
-  WebsiteInfo
+  QrCodeInfo
 >
 
 type NotifyRequest = MessageWrapper<
@@ -34,5 +34,5 @@ type NotifyRequest = MessageWrapper<
   { message: string }
 >
 
-export type { MessageWrapper, NotifyRequest, OpenModalRequest, VaildQRCodeRequest, WebsiteInfo }
+export type { MessageWrapper, NotifyRequest, OpenModalRequest, QrCodeInfo, VaildQRCodeRequest }
 export { ContentMessageAction }

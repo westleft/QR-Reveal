@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { WebsiteInfo } from '@/types'
+import type { QrCodeInfo } from '@/types'
 import { inject } from 'vue'
 
-const data = inject<WebsiteInfo>('data')
+const data = inject<QrCodeInfo>('data')
 
 function closeModal() {
   const modal = document.getElementById('qr-code-modal')
