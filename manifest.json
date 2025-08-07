@@ -1,7 +1,7 @@
 {
   "name": "掃碼快讀 | QR Reveal",
   "description": "點選右鍵，可快速掃描網頁上的 QR Code，並開啟連結",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html"
