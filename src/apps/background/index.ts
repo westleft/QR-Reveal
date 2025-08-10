@@ -41,7 +41,7 @@ function openModal(tabId: number, data: OpenModalRequest) {
  * @param response 偵測回應
  */
 async function handleQRCode(tabId: number, qrcodeSrc: string, response: any) {
-  if (!response.success) {
+  if (!response || !response.success) {
     console.error('這不是 QR Code')
     notifyFailure(tabId)
     return
@@ -56,7 +56,7 @@ async function handleQRCode(tabId: number, qrcodeSrc: string, response: any) {
       action: ContentMessageAction.OpenModal,
       data: {
         type: 'text',
-        image: qrcodeSrc,
+        qrcodeUrl: qrcodeSrc,
         text: qrData,
       },
     })
