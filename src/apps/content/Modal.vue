@@ -3,7 +3,7 @@ import type { QrCodeInfo } from '@/types'
 import { inject } from 'vue'
 
 const data = inject<QrCodeInfo>('data')
-console.log('data', data)
+
 function closeModal() {
   const modal = document.getElementById('qr-code-modal')
   if (modal) {

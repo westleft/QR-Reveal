@@ -40,3 +40,31 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     }).showToast()
   }
 })
+
+document.addEventListener('contextmenu', (event) => {
+  const el = event.target
+  let hasImage = false
+
+  // 1. <img>
+  if (el.tagName.toLowerCase() === 'img' && el.src) {
+    hasImage = true
+  }
+
+  // 2. background-image
+  const style = window.getComputedStyle(el)
+  if (style.backgroundImage && style.backgroundImage !== 'none') {
+    hasImage = true
+  }
+
+  // 3. canvas
+  if (el.tagName.toLowerCase() === 'canvas') {
+    hasImage = true
+  }
+
+  console.log(hasImage)
+
+  chrome.runtime.sendMessage({
+    type: 'updateContextMenu',
+    show: hasImage,
+  })
+})

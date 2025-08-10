@@ -1,16 +1,19 @@
 import type { NotifyRequest, OpenModalRequest } from '@/types'
 import { ContentMessageAction } from '@/types'
 import { fetchWebsite, vaildIsURL } from '@/utils'
+import { createMenu } from './menu'
 
 const { sendMessage } = chrome.tabs
 
-// 創建右鍵選單
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: 'detectQRcode',
-    title: '偵測 QR Code',
-    contexts: ['image'],
-  })
+createMenu()
+
+// update context menu by message
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === 'updateContextMenu') {
+    chrome.contextMenus.update('detectQRcode', {
+      enabled: message.show,
+    })
+  }
 })
 
 /**
