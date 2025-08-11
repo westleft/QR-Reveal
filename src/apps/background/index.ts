@@ -8,11 +8,20 @@ const { sendMessage } = chrome.tabs
 createMenu()
 
 // update context menu by message
-chrome.runtime.onMessage.addListener((message) => {
-  if (message.type === 'updateContextMenu') {
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  const { action } = message
+
+  if (action === 'updateContextMenu') {
     chrome.contextMenus.update('detectQRcode', {
       enabled: message.show,
     })
+  }
+
+  if (action === 'fetchWebsite') {
+    const { url } = message
+    console.log(url)
+    fetchWebsite(url).then(sendResponse)
+    return true
   }
 })
 
@@ -43,19 +52,7 @@ function openModal(tabId: number, data: OpenModalRequest) {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'detectQRcode') {
     openModal(tab!.id!, {
-      action: ContentMessageAction.OpenModal,
-    })
-  }
-})
-
-// 監聽來自 content script 的消息
-chrome.runtime.onMessage.addListener(async (request, _sender, sendResponse) => {
-  const { action } = request
-
-  if (action === 'qrCodeDetected') {
-    const { url } = request
-    fetchWebsite(url).then((data) => {
-      sendResponse({ data })
+      action: ContentMessageAction.OpenModal
     })
   }
 })

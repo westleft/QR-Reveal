@@ -6,30 +6,46 @@ export async function detectQRCodeFromCanvas(canvas: HTMLCanvasElement) {
   const codeReader = new BrowserQRCodeReader()
   try {
     const result = await codeReader.decodeFromImageUrl(dataUrl)
-    console.log('QR code text:', result.getText())
+    return result.getText()
   } catch (err) {
     console.log('No QR code found:', err)
+    return null
   }
 }
 
 export async function detectQRCodeFromImage(image: HTMLImageElement) {
-  const dataUrl = image.src
-  const codeReader = new BrowserQRCodeReader()
-  const result = await codeReader.decodeFromImageUrl(dataUrl)
-  console.log('QR code text:', result.getText())
+  try {
+    const dataUrl = image.src
+    const codeReader = new BrowserQRCodeReader()
+    const result = await codeReader.decodeFromImageUrl(dataUrl)
+    return result.getText()
+  } catch (err) { 
+    console.error('No QR code found:', err)
+    return null
+  }
 }
 
 export async function detectQRCodeFromBackgroundImage(element: HTMLElement) {
-  const style = window.getComputedStyle(element)
-  const backgroundImage = style.backgroundImage
-  const codeReader = new BrowserQRCodeReader()
-  const result = await codeReader.decodeFromImageUrl(backgroundImage)
-  console.log('QR code text:', result.getText())
+  try {
+    const style = window.getComputedStyle(element)
+    const backgroundImage = style.backgroundImage
+    const codeReader = new BrowserQRCodeReader()
+    const result = await codeReader.decodeFromImageUrl(backgroundImage)
+    return result.getText()
+  } catch (err) {
+    console.error('No QR code found:', err)
+    return null
+  }
 }
 
-export async function detectQRCodeFromSvg(svg: HTMLImageElement) {
-  const dataUrl = svg.src
-  const codeReader = new BrowserQRCodeReader()
-  const result = await codeReader.decodeFromImageUrl(dataUrl)
-  console.log('QR code text:', result.getText())
+export async function detectQRCodeFromSvg(svg: SVGSVGElement) {
+  try {
+    const dataUrl = svg.toDataURL('image/svg+xml')
+    const codeReader = new BrowserQRCodeReader()
+    const result = await codeReader.decodeFromImageUrl(dataUrl)
+    return result.getText()
+  } catch (err) {
+    console.error('No QR code found:', err)
+    return null
+  }
 }

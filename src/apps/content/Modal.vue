@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import Loading from './components/Loading.vue'
+import { onBeforeMount, ref } from 'vue'
 import { useStore } from './store'
-import { detectQRCodeFromCanvas } from './utils/detect'
+import { detectQRCodeFromCanvas, detectQRCodeFromImage, detectQRCodeFromSvg, detectQRCodeFromBackgroundImage } from './utils/detect'
+import Toastify from 'toastify-js'
+import { vaildIsURL } from '@/utils'
+import type{ QrCodeInfo } from '@/types'
 
 const store = useStore()
+const data = ref<QrCodeInfo | null>(null)
+const isLoading = ref(true)
 
 function closeModal() {
   const modal = document.getElementById('qr-code-modal')
@@ -12,42 +18,100 @@ function closeModal() {
   }
 }
 
-onMounted(() => {
-  detectQRCodeFromCanvas(store.data)
+function checkElementType(element: HTMLElement) {
+  const tag = element.tagName.toLowerCase()
+
+  if (tag === 'img') {
+    return detectQRCodeFromImage(element as HTMLImageElement)
+  }  
+  if (tag === 'canvas') {
+    return detectQRCodeFromCanvas(element as HTMLCanvasElement)
+  }
+  if (tag === 'svg') {
+    return detectQRCodeFromSvg(element as unknown as SVGSVGElement)
+  }
+
+  return detectQRCodeFromBackgroundImage(element)
+}
+
+async function fetchWebsite(url: string) {
+  const data = await chrome.runtime.sendMessage({
+    action: 'fetchWebsite',
+    url,
+  })
+  return data as QrCodeInfo
+}
+
+onBeforeMount(async () => {
+  const result = await checkElementType(store.element as HTMLElement)
+  if (!result) {
+    Toastify({
+      text: 'No QR code found',
+      duration: 3000,
+      gravity: 'top',
+      position: 'center',
+    }).showToast()
+    return
+  }
+
+  const isUrl = vaildIsURL(result)
+  if (isUrl) {
+    const websiteInfo = await fetchWebsite(result)
+    data.value = {
+      ...websiteInfo,
+      type: 'website',
+    }
+  } else {
+    data.value = {
+      type: 'text',
+      text: result,
+    }
+  }
+
+  isLoading.value = false
 })
 </script>
 
 <template>
-  <div class="modal" @click.self="closeModal">
-    <div class="modal-content">
-      <div class="modal-info">
-        {{ store.data }}
-        <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image">
+  <Transition name="modal">
+    <div class="modal" @click.self="closeModal">
+      <div class="modal-content">
+        <div class="modal-info">
+          <Loading v-if="isLoading" />
+          <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image"> -->
 
-        <a v-if="data!.type === 'website'" target="_blank" :href="data?.url" class="modal-info__content">
-          <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
-          <div v-else class="image__placeholder">
-            <p>image not found</p>
+          <a v-if="!isLoading && data!.type === 'website'" target="_blank" class="modal-info__content">
+            <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
+            <div v-else class="image__placeholder">
+              <p>image not found</p>
+            </div>
+            <p class="modal-info__title">
+              {{ data?.title || 'No title' }}
+            </p>
+            <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
+            <div class="modal-info__btn">
+              <button>前往連結</button>
+            </div>
+          </a>
+
+          <div v-if="!isLoading && data!.type === 'text'" class="modal-info__content">
+            <p class="modal-info__title">
+              {{ data?.text || 'No content' }}
+            </p>
           </div>
-          <p class="modal-info__title">
-            {{ data?.title || 'No title' }}
-          </p>
-          <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
-          <div class="modal-info__btn">
-            <button>前往連結</button>
-          </div>
-        </a>
-        <div v-if="data!.type === 'text'" class="modal-info__content">
-          <p class="modal-info__title">
-            {{ data?.text || 'No content' }}
-          </p>
-        </div> -->
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+
 .modal {
   position: fixed;
   display: flex;

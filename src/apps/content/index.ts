@@ -38,11 +38,11 @@ document.addEventListener('contextmenu', (event) => {
   if (isImage) {
     setActivePinia(pinia)
     const store = useStore()
-    store.data = element
+    store.element = element
   }
 
   chrome.runtime.sendMessage({
-    type: 'updateContextMenu',
+    action: 'updateContextMenu',
     show: isImage,
   })
 })

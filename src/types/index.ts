@@ -9,8 +9,6 @@ interface QrCodeInfo {
   title?: string
   description?: string
   image?: string
-  qrcodeUrl?: string
-  url?: string
   text?: string
 }
 
