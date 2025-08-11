@@ -1,29 +1,19 @@
-import type { NotifyRequest, OpenModalRequest, VaildQRCodeRequest } from '@/types'
+import type { NotifyRequest } from '@/types'
+import { createPinia, setActivePinia } from 'pinia'
 import Toastify from 'toastify-js'
-import { createApp } from 'vue'
-import { validateQRCode } from '@/utils'
-import Modal from './Modal.vue'
+import { vaildIsImage } from '@/utils/vaild'
+import { useStore } from './store'
+import { createVueApp } from './utils'
 import 'toastify-js/src/toastify.css'
 
+const pinia = createPinia()
+
 // 監聽來自 background script 的消息
-chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
   const { action } = request
 
-  if (action === 'vaildQRCode') {
-    const { data: { imageUrl } } = request as VaildQRCodeRequest
-    validateQRCode(imageUrl).then(sendResponse)
-
-    return true
-  }
-
   if (action === 'openModal') {
-    const { data } = request as OpenModalRequest
-    const modal = document.createElement('div')
-    modal.id = 'qr-code-modal'
-    document.body.appendChild(modal)
-    const app = createApp(Modal)
-    app.provide('data', data)
-    app.mount(modal)
+    createVueApp(pinia)
   }
 
   if (action === 'notify') {
@@ -39,4 +29,20 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
       },
     }).showToast()
   }
+})
+
+document.addEventListener('contextmenu', (event) => {
+  const element = event.target as HTMLElement
+  const isImage = vaildIsImage(element)
+
+  if (isImage) {
+    setActivePinia(pinia)
+    const store = useStore()
+    store.element = element
+  }
+
+  chrome.runtime.sendMessage({
+    action: 'updateContextMenu',
+    show: isImage,
+  })
 })

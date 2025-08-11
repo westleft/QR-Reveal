@@ -9,24 +9,16 @@ interface QrCodeInfo {
   title?: string
   description?: string
   image?: string
-  qrcodeUrl?: string
-  url?: string
   text?: string
 }
 
-interface MessageWrapper<U, T> {
+interface MessageWrapper<U, T = undefined> {
   action: U
   data: T
 }
 
-type VaildQRCodeRequest = MessageWrapper<
-  ContentMessageAction.VaildQRCode,
-  { imageUrl: string }
->
-
 type OpenModalRequest = MessageWrapper<
-  ContentMessageAction.OpenModal,
-  QrCodeInfo
+  ContentMessageAction.OpenModal
 >
 
 type NotifyRequest = MessageWrapper<
@@ -34,5 +26,5 @@ type NotifyRequest = MessageWrapper<
   { message: string }
 >
 
-export type { MessageWrapper, NotifyRequest, OpenModalRequest, QrCodeInfo, VaildQRCodeRequest }
+export type { MessageWrapper, NotifyRequest, OpenModalRequest, QrCodeInfo }
 export { ContentMessageAction }
