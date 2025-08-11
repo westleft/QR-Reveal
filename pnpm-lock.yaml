@@ -14,9 +14,9 @@ importers:
       '@vitejs/plugin-basic-ssl':
         specifier: ^2.1.0
         version: 2.1.0(vite@7.0.5(@types/node@24.0.15)(yaml@2.8.0))
-      '@zxing/library':
-        specifier: ^0.21.3
-        version: 0.21.3
+      '@zxing/browser':
+        specifier: ^0.1.5
+        version: 0.1.5(@zxing/library@0.21.3)
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
@@ -826,6 +826,11 @@ packages:
 
   '@webcomponents/custom-elements@1.6.0':
     resolution: {integrity: sha512-CqTpxOlUCPWRNUPZDxT5v2NnHXA4oox612iUGnmTUGQFhZ1Gkj8kirtl/2wcF6MqX7+PqqicZzOCBKKfIn0dww==}
+
+  '@zxing/browser@0.1.5':
+    resolution: {integrity: sha512-4Lmrn/il4+UNb87Gk8h1iWnhj39TASEHpd91CwwSJtY5u+wa0iH9qS0wNLAWbNVYXR66WmT5uiMhZ7oVTrKfxw==}
+    peerDependencies:
+      '@zxing/library': ^0.21.0
 
   '@zxing/library@0.21.3':
     resolution: {integrity: sha512-hZHqFe2JyH/ZxviJZosZjV+2s6EDSY0O24R+FQmlWZBZXP9IqMo7S3nb3+2LBWxodJQkSurdQGnqE7KXqrYgow==}
@@ -3220,6 +3225,12 @@ snapshots:
       vue: 3.5.17(typescript@5.8.3)
 
   '@webcomponents/custom-elements@1.6.0': {}
+
+  '@zxing/browser@0.1.5(@zxing/library@0.21.3)':
+    dependencies:
+      '@zxing/library': 0.21.3
+    optionalDependencies:
+      '@zxing/text-encoding': 0.9.0
 
   '@zxing/library@0.21.3':
     dependencies:

@@ -1,4 +1,4 @@
-import { BrowserQRCodeReader } from '@zxing/library'
+import { BrowserQRCodeReader } from '@zxing/browser'
 
 interface QRCodeResult {
   success: boolean

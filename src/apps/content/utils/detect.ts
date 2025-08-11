@@ -1,4 +1,4 @@
-import { BrowserQRCodeReader } from '@zxing/library'
+import { BrowserQRCodeReader } from '@zxing/browser';
 
 export async function detectQRCodeFromCanvas(canvas: HTMLCanvasElement) {
   const dataUrl = canvas.toDataURL('image/png')
@@ -15,9 +15,8 @@ export async function detectQRCodeFromCanvas(canvas: HTMLCanvasElement) {
 
 export async function detectQRCodeFromImage(image: HTMLImageElement) {
   try {
-    const dataUrl = image.src
     const codeReader = new BrowserQRCodeReader()
-    const result = await codeReader.decodeFromImageUrl(dataUrl)
+    const result = await codeReader.decodeFromImageElement(image)
     return result.getText()
   } catch (err) { 
     console.error('No QR code found:', err)
