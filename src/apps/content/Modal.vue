@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { QrCodeInfo } from '@/types'
-import { inject } from 'vue'
+import { onMounted } from 'vue'
+import { useStore } from './store'
+import { detectQRCodeFromCanvas } from './utils/detect'
 
-const data = inject<QrCodeInfo>('data')
+const store = useStore()
 
 function closeModal() {
   const modal = document.getElementById('qr-code-modal')
@@ -10,13 +11,18 @@ function closeModal() {
     modal.remove()
   }
 }
+
+onMounted(() => {
+  detectQRCodeFromCanvas(store.data)
+})
 </script>
 
 <template>
   <div class="modal" @click.self="closeModal">
     <div class="modal-content">
       <div class="modal-info">
-        <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image">
+        {{ store.data }}
+        <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image">
 
         <a v-if="data!.type === 'website'" target="_blank" :href="data?.url" class="modal-info__content">
           <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
@@ -35,7 +41,7 @@ function closeModal() {
           <p class="modal-info__title">
             {{ data?.text || 'No content' }}
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -1,29 +1,19 @@
-import type { NotifyRequest, OpenModalRequest, VaildQRCodeRequest } from '@/types'
+import type { NotifyRequest } from '@/types'
+import { createPinia, setActivePinia } from 'pinia'
 import Toastify from 'toastify-js'
-import { createApp } from 'vue'
-import { validateQRCode } from '@/utils'
-import Modal from './Modal.vue'
+import { vaildIsImage } from '@/utils/vaild'
+import { useStore } from './store'
+import { createVueApp } from './utils'
 import 'toastify-js/src/toastify.css'
 
+const pinia = createPinia()
+
 // 監聽來自 background script 的消息
-chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
   const { action } = request
 
-  if (action === 'vaildQRCode') {
-    const { data: { imageUrl } } = request as VaildQRCodeRequest
-    validateQRCode(imageUrl).then(sendResponse)
-
-    return true
-  }
-
   if (action === 'openModal') {
-    const { data } = request as OpenModalRequest
-    const modal = document.createElement('div')
-    modal.id = 'qr-code-modal'
-    document.body.appendChild(modal)
-    const app = createApp(Modal)
-    app.provide('data', data)
-    app.mount(modal)
+    createVueApp(pinia)
   }
 
   if (action === 'notify') {
@@ -42,29 +32,17 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 })
 
 document.addEventListener('contextmenu', (event) => {
-  const el = event.target
-  let hasImage = false
+  const element = event.target as HTMLElement
+  const isImage = vaildIsImage(element)
 
-  // 1. <img>
-  if (el.tagName.toLowerCase() === 'img' && el.src) {
-    hasImage = true
+  if (isImage) {
+    setActivePinia(pinia)
+    const store = useStore()
+    store.data = element
   }
-
-  // 2. background-image
-  const style = window.getComputedStyle(el)
-  if (style.backgroundImage && style.backgroundImage !== 'none') {
-    hasImage = true
-  }
-
-  // 3. canvas
-  if (el.tagName.toLowerCase() === 'canvas') {
-    hasImage = true
-  }
-
-  console.log(hasImage)
 
   chrome.runtime.sendMessage({
     type: 'updateContextMenu',
-    show: hasImage,
+    show: isImage,
   })
 })

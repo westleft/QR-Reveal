@@ -43,4 +43,39 @@ function vaildIsURL(value: string): boolean {
   return pattern.test(value.trim())
 }
 
-export { vaildIsURL, validateQRCode }
+/**
+ * valid parent element is image.
+ * include img, canvas, svg, background-image.
+ * @param el element
+ */
+function vaildIsImage(el: HTMLElement): boolean {
+  let isImage = false
+
+  const tag = el.tagName.toLowerCase()
+  const imageTags = new Set(['img', 'canvas', 'svg'])
+
+  isImage = imageTags.has(tag) && (tag !== 'img' || !!(el as HTMLImageElement).src)
+
+  if (!isImage) {
+    const bgi = getComputedStyle(el).backgroundImage
+    isImage = !!bgi && bgi !== 'none'
+  }
+
+  return isImage
+}
+
+// type ImageType = 'img' | 'canvas' | 'svg' | 'background-image'
+
+// function checkImageType(el: HTMLElement): ImageType {
+//   const tag = el.tagName.toLowerCase()
+//   const imageTags = new Set(['img', 'canvas', 'svg'])
+
+//   if (imageTags.has(tag)) {
+//     return tag as ImageType
+//   }
+
+//   const bgi = getComputedStyle(el).backgroundImage
+//   return !!bgi && bgi !== 'none' ? 'background-image' : 'img'
+// }
+
+export { vaildIsImage, vaildIsURL, validateQRCode }
