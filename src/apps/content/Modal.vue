@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import Loading from './components/Loading.vue'
-import { onBeforeMount, ref } from 'vue'
-import { useStore } from './store'
-import { detectQRCodeFromCanvas, detectQRCodeFromImage, detectQRCodeFromSvg, detectQRCodeFromBackgroundImage } from './utils/detect'
+import type { QrCodeInfo } from '@/types'
 import Toastify from 'toastify-js'
+import { onBeforeMount, ref } from 'vue'
 import { vaildIsURL } from '@/utils'
-import type{ QrCodeInfo } from '@/types'
+import Loading from './components/Loading.vue'
+import { useStore } from './store'
+import {
+  detectQRCodeFromBackgroundImage,
+  detectQRCodeFromCanvas,
+  detectQRCodeFromImage,
+  detectQRCodeFromSvg,
+} from './utils/detect'
 
 const store = useStore()
 const data = ref<QrCodeInfo | null>(null)
@@ -23,7 +28,7 @@ function checkElementType(element: HTMLElement) {
 
   if (tag === 'img') {
     return detectQRCodeFromImage(element as HTMLImageElement)
-  }  
+  }
   if (tag === 'canvas') {
     return detectQRCodeFromCanvas(element as HTMLCanvasElement)
   }
@@ -51,6 +56,7 @@ onBeforeMount(async () => {
       gravity: 'top',
       position: 'center',
     }).showToast()
+    closeModal()
     return
   }
 
@@ -73,45 +79,49 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <Transition name="modal">
-    <div class="modal" @click.self="closeModal">
-      <div class="modal-content">
-        <div class="modal-info">
-          <Loading v-if="isLoading" />
-          <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image"> -->
+  <div
+    v-if="data"
+    class="modal"
+    @click.self="closeModal"
+  >
+    <div class="modal-content">
+      <div class="modal-info">
+        <Loading v-if="isLoading" />
+        <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image"> -->
 
-          <a v-if="!isLoading && data!.type === 'website'" target="_blank" class="modal-info__content">
-            <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
-            <div v-else class="image__placeholder">
-              <p>image not found</p>
-            </div>
-            <p class="modal-info__title">
-              {{ data?.title || 'No title' }}
-            </p>
-            <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
-            <div class="modal-info__btn">
-              <button>前往連結</button>
-            </div>
-          </a>
-
-          <div v-if="!isLoading && data!.type === 'text'" class="modal-info__content">
-            <p class="modal-info__title">
-              {{ data?.text || 'No content' }}
-            </p>
+        <a
+          v-if="data.type === 'website'"
+          target="_blank"
+          class="modal-info__content"
+          @click="closeModal"
+        >
+          <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
+          <div v-else class="image__placeholder">
+            <p>image not found</p>
           </div>
+          <p class="modal-info__title">
+            {{ data?.title || 'No title' }}
+          </p>
+          <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
+          <div class="modal-info__btn">
+            <button>前往連結</button>
+          </div>
+        </a>
+
+        <div
+          v-if="data.type === 'text'"
+          class="modal-info__content"
+        >
+          <p class="modal-info__title">
+            {{ data?.text || 'No content' }}
+          </p>
         </div>
       </div>
     </div>
-  </Transition>
+  </div>
 </template>
 
 <style scoped>
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-
 .modal {
   position: fixed;
   display: flex;
@@ -143,7 +153,6 @@ onBeforeMount(async () => {
     display: flex;
     flex-direction: column;
     gap: 10px !important;
-    cursor: pointer;
     min-width: 300px;
   }
 
