@@ -1,0 +1,66 @@
+name: Build Chrome Extension
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      # 取得程式碼
+      - uses: actions/checkout@v4
+
+      # 安裝 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 安裝 pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # 取得版本號 (Linux shell)
+      - name: Get release version
+        id: get_version
+        run: |
+          # 取 release 的 tag name
+          tag_name="${GITHUB_REF##*/}"
+          version="${tag_name#v}"
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
+
+      # 設定 extension version
+      - name: Set extension version
+        run: |
+          version="${{ steps.get_version.outputs.version }}"
+          echo "Setting extension version to $version"
+          jq ".version = \"$version\"" manifest.json > manifest.tmp.json
+          mv manifest.tmp.json manifest.json
+          echo "Current manifest version:"
+          cat manifest.json
+
+      # 安裝依賴
+      - name: Install dependencies
+        run: pnpm install
+
+      # Build extension
+      - name: Build Chrome extension
+        run: pnpm run build:extension
+
+      # 發布至 Chrome Web Store
+      - name: Publish to Chrome Web Store
+        uses: mnao305/chrome-extension-upload@v4.0.1
+        with:
+          file-path: 'release/release.zip'
+          extension-id: ${{ secrets.EXTENSION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}

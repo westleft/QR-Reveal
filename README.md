@@ -39,3 +39,9 @@ pnpm run build:extension
 - 🖱️ 點擊顯示 QR 碼內容
 - ⚡ 熱更新開發環境
 - 🎨 現代化的 Vue 3 界面
+
+## github action 測試
+
+```shell
+act release -e .github/test_events/release_event.json
+```
