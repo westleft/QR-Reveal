@@ -1,0 +1,20 @@
+{
+  "name": {
+    "message": "掃碼快讀 | QR Reveal"
+  },
+  "description": {
+    "message": "點選右鍵，可快速掃描網頁上的 QR Code，並開啟連結"
+  },
+  "detect_qr_code": {
+    "message": "偵測 QR Code"
+  },
+  "setting": {
+    "message": "進階設定（開發中）"
+  },
+  "no_qr_code_found": {
+    "message": "找不到 QR Code"
+  },
+  "open_in_new_tab": {
+    "message": "在新分頁開啟"
+  }
+}
