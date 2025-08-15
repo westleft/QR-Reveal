@@ -1,8 +1,10 @@
 export function createMenu() {
-// create context menu by right click
+  const { getMessage } = chrome.i18n
+
+  // create context menu by right click
   chrome.contextMenus.create({
     id: 'detectQRcode',
-    title: '偵測 QR Code',
+    title: getMessage('detect_qr_code'),
     contexts: ['all'],
     type: 'normal',
   })
@@ -15,7 +17,7 @@ export function createMenu() {
 
   chrome.contextMenus.create({
     id: 'setting',
-    title: '進階設定（開發中）',
+    title: getMessage('setting'),
     contexts: ['all'],
     type: 'normal',
     enabled: false,

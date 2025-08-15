@@ -12,6 +12,8 @@ import {
   detectQRCodeFromSvg,
 } from './utils/detect'
 
+const { getMessage } = chrome.i18n
+
 const store = useStore()
 const data = ref<QrCodeInfo | null>(null)
 const isLoading = ref(true)
@@ -51,7 +53,7 @@ onBeforeMount(async () => {
   const result = await checkElementType(store.element as HTMLElement)
   if (!result) {
     Toastify({
-      text: 'No QR code found',
+      text: chrome.i18n.getMessage('no_qr_code_found'),
       duration: 3000,
       gravity: 'top',
       position: 'center',
@@ -88,7 +90,6 @@ onBeforeMount(async () => {
       <div class="modal-info">
         <Loading v-if="isLoading" />
         <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image"> -->
-
         <a
           v-if="data.type === 'website'"
           target="_blank"
@@ -104,7 +105,7 @@ onBeforeMount(async () => {
           </p>
           <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
           <div class="modal-info__btn">
-            <button>前往連結</button>
+            <button>{{ getMessage('open_in_new_tab') }}</button>
           </div>
         </a>
 

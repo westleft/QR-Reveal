@@ -27,13 +27,13 @@ async function validateQRCode(
 
     return {
       success: false,
-      error: 'No QR code found',
+      error: chrome.i18n.getMessage('no_qr_code_found'),
     }
   } catch (e: unknown) {
     console.error('error', e)
     return {
       success: false,
-      error: 'No QR code found',
+      error: chrome.i18n.getMessage('no_qr_code_found'),
     }
   }
 }
