@@ -10,6 +10,7 @@ interface QrCodeInfo {
   description?: string
   image?: string
   text?: string
+  url?: string
 }
 
 interface MessageWrapper<U, T = undefined> {

@@ -68,6 +68,7 @@ onBeforeMount(async () => {
     data.value = {
       ...websiteInfo,
       type: 'website',
+      url: result,
     }
   } else {
     data.value = {
@@ -82,7 +83,6 @@ onBeforeMount(async () => {
 
 <template>
   <div
-    v-if="data"
     class="modal"
     @click.self="closeModal"
   >
@@ -91,10 +91,10 @@ onBeforeMount(async () => {
         <Loading v-if="isLoading" />
         <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image"> -->
         <a
-          v-if="data.type === 'website'"
+          v-if="data?.type === 'website'"
           target="_blank"
           class="modal-info__content"
-          @click="closeModal"
+          :href="data?.url"
         >
           <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
           <div v-else class="image__placeholder">
@@ -110,7 +110,7 @@ onBeforeMount(async () => {
         </a>
 
         <div
-          v-if="data.type === 'text'"
+          v-if="data?.type === 'text'"
           class="modal-info__content"
         >
           <p class="modal-info__title">
