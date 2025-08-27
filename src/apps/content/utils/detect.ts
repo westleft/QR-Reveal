@@ -28,8 +28,9 @@ export async function detectQRCodeFromBackgroundImage(element: HTMLElement) {
   try {
     const style = window.getComputedStyle(element)
     const backgroundImage = style.backgroundImage
+    const imageUrl = backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '')
     const codeReader = new BrowserQRCodeReader()
-    const result = await codeReader.decodeFromImageUrl(backgroundImage)
+    const result = await codeReader.decodeFromImageUrl(imageUrl)
     return result.getText()
   } catch (err) {
     console.error('No QR code found:', err)

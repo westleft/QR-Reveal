@@ -52,7 +52,7 @@ function vaildIsImage(el: HTMLElement): boolean {
   let isImage = false
 
   const tag = el.tagName.toLowerCase()
-  const imageTags = new Set(['img', 'canvas', 'svg'])
+  const imageTags = new Set(['img', 'canvas', 'svg', 'image'])
 
   isImage = imageTags.has(tag) && (tag !== 'img' || !!(el as HTMLImageElement).src)
 
