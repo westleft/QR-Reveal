@@ -15,6 +15,9 @@
     "type": "module",
     "service_worker": "src/apps/background/index.ts"
   },
+  "action": {
+    "default_popup": "src/apps/popup/index.html"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
