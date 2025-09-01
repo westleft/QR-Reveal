@@ -16,5 +16,23 @@
   },
   "open_in_new_tab": {
     "message": "Open in new tab"
+  },
+  "popup_slide_1_text": {
+    "message": "Right-click on the QR Code"
+  },
+  "popup_slide_2_text": {
+    "message": "Click \"Detect QR Code\" to view the content"
+  },
+  "popup_slide_1_button_text": {
+    "message": "Next Step"
+  },
+  "popup_slide_2_button_text": {
+    "message": "Try it now!"
+  },
+  "popup_help_text": {
+    "message": "Have any problems?"
+  },
+  "popup_help_link_text": {
+    "message": "Report to us"
   }
 }

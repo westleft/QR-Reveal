@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import Slider1 from '@/assets/images/popup/slide1.svg'
-import Slider2 from '@/assets/images/popup/slide2.svg'
+import Slider2 from '@/assets/images/popup/slide2.png'
 
-const slideIndex = ref(0)
+const { getMessage } = chrome.i18n
+const slideIndex = ref<number>(0)
 
 const slideItems = [
   {
     img: Slider1,
-    text: '在 QR Code 上按下右鍵',
-    buttonText: '下一步',
+    text: getMessage('popup_slide_1_text'),
+    buttonText: getMessage('popup_slide_1_button_text'),
+    onClick: handleNext,
   },
   {
     img: Slider2,
-    text: '「偵測 QR Code」查看內容',
-    buttonText: '馬上試試！',
+    text: getMessage('popup_slide_2_text'),
+    buttonText: getMessage('popup_slide_2_button_text'),
+    onClick: closePopup,
   },
 ]
 
@@ -25,13 +28,15 @@ const currentSlide = computed(() => {
 function handleNext() {
   slideIndex.value++
 }
+
+function closePopup() {
+  window.close()
+}
 </script>
 
 <template>
   <main>
-    <div class="image__wrapper">
-      <img :src="currentSlide.img" alt="logo" class="logo">
-    </div>
+    <img :src="currentSlide.img" alt="logo">
     <p class="title">
       {{ currentSlide.text }}
     </p>
@@ -44,25 +49,28 @@ function handleNext() {
         @click="slideIndex = index"
       ></div>
     </div>
-    <button @click="handleNext">
+    <button @click="currentSlide.onClick">
       {{ currentSlide.buttonText }}
     </button>
     <p class="help">
-      操作有問題？
+      {{ getMessage('popup_help_text') }}
       <a
-        href="https://github.com/yunyoujun/qr-code-detector/issues"
+        href="https://github.com/westleft/QR-Reveal/issues"
         target="_blank"
-      >回報我們
+      >{{ getMessage('popup_help_link_text') }}
       </a>
     </p>
   </main>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,500&display=swap&subset=chinese-traditional');
+
 main {
+  font-family: "Noto Sans TC";
   background-color: #fff;
   width: 240px;
-  padding: 24px;
+  padding: 0 24px 24px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,15 +108,9 @@ main {
   }
 }
 
-.image__wrapper {
-  width: 184px;
-  height: 155px;
-  margin-bottom: 26px;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+img {
+  width: 100%;
+  object-fit: contain;
 }
 
 .help {

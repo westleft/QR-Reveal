@@ -16,5 +16,23 @@
   },
   "open_in_new_tab": {
     "message": "在新分頁開啟"
+  },
+  "popup_slide_1_text": {
+    "message": "在 QR Code 上按下右鍵"
+  },
+  "popup_slide_2_text": {
+    "message": "「偵測 QR Code」查看內容"
+  },
+  "popup_slide_1_button_text": {
+    "message": "下一步"
+  },
+  "popup_slide_2_button_text": {
+    "message": "馬上試試！"
+  },
+  "popup_help_text": {
+    "message": "操作有問題？"
+  },
+  "popup_help_link_text": {
+    "message": "回報我們"
   }
 }
