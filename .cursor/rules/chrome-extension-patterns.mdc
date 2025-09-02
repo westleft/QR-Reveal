@@ -1,0 +1,33 @@
+# Chrome Extension Development Patterns
+
+## Message Passing
+- Use `chrome.runtime.onMessage.addListener()` for receiving messages
+- Use `chrome.tabs.sendMessage()` for sending messages to content scripts
+- Use `chrome.runtime.sendMessage()` for sending messages to background script
+- Always return `true` for async message handlers
+
+## Context Menu Integration
+- Create context menus in [src/apps/background/menu.ts](mdc:src/apps/background/menu.ts)
+- Update menu state based on content script messages
+- Handle menu clicks with `chrome.contextMenus.onClicked.addListener()`
+
+## Content Script Patterns
+- Inject Vue apps dynamically using `createVueApp()` utility
+- Use Pinia for state management across content script components
+- Handle DOM events and communicate with background script
+- Validate elements before processing (e.g., `vaildIsImage()`)
+
+## Background Script Patterns
+- Use service worker architecture (Manifest V3)
+- Handle extension lifecycle events
+- Manage context menus and browser actions
+- Coordinate between different extension parts
+
+## Type Safety
+- Use [src/types/index.ts](mdc:src/types/index.ts) for message type definitions
+- Import Chrome types from `@types/chrome`
+- Define request/response interfaces for message passing
+description:
+globs:
+alwaysApply: true
+---
