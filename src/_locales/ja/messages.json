@@ -1,0 +1,38 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "クリック右クリックで、QRコードを素早くスキャンし、リンクを開きます"
+  },
+  "detect_qr_code": {
+    "message": "QRコードを検出"
+  },
+  "setting": {
+    "message": "詳細設定（開発中）"
+  },
+  "no_qr_code_found": {
+    "message": "QRコードが見つかりません"
+  },
+  "open_in_new_tab": {
+    "message": "新しいタブで開く"
+  },
+  "popup_slide_1_text": {
+    "message": "QRコード上で右クリック"
+  },
+  "popup_slide_2_text": {
+    "message": "「QRコードを検出」で内容を表示"
+  },
+  "popup_slide_1_button_text": {
+    "message": "次のステップ"
+  },
+  "popup_slide_2_button_text": {
+    "message": "今すぐ試す！"
+  },
+  "popup_help_text": {
+    "message": "操作に問題がありますか？"
+  },
+  "popup_help_link_text": {
+    "message": "送信する"
+  }
+}
