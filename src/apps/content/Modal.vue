@@ -51,6 +51,7 @@ async function fetchWebsite(url: string) {
 
 onBeforeMount(async () => {
   const result = await checkElementType(store.element as HTMLElement)
+
   if (!result) {
     Toastify({
       text: chrome.i18n.getMessage('no_qr_code_found'),
@@ -63,6 +64,7 @@ onBeforeMount(async () => {
   }
 
   const isUrl = vaildIsURL(result)
+
   if (isUrl) {
     const websiteInfo = await fetchWebsite(result)
     data.value = {

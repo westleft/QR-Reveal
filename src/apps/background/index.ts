@@ -7,6 +7,18 @@ const { sendMessage } = chrome.tabs
 
 createMenu()
 
+async function imageUrlToBase64(url: string): Promise<string> {
+  console.log('url', url)
+  const res = await fetch(url)
+  const blob = await res.blob()
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
+}
+
 // update context menu by message
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   const { action } = message
@@ -19,8 +31,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
   if (action === 'fetchWebsite') {
     const { url } = message
-    console.log(url)
     fetchWebsite(url).then(sendResponse)
+    return true
+  }
+
+  if (action === 'convertImageToBase64') {
+    const { url } = message
+    console.log(url)
+    imageUrlToBase64(url).then(sendResponse)
     return true
   }
 })
@@ -52,7 +70,7 @@ function openModal(tabId: number, data: OpenModalRequest) {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'detectQRcode') {
     openModal(tab!.id!, {
-      action: ContentMessageAction.OpenModal
+      action: ContentMessageAction.OpenModal,
     })
   }
 })

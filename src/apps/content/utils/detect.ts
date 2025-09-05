@@ -1,5 +1,22 @@
 import { BrowserQRCodeReader } from '@zxing/browser'
 
+function isBase64Image(url: string): boolean {
+  return /^data:image\/[a-zA-Z]+;base64,/.test(url)
+}
+
+async function getImageBase64(src: string): Promise<string> {
+  if (isBase64Image(src)) {
+    return src // 已經是 base64
+  }
+
+  const result = await chrome.runtime.sendMessage({
+    action: 'convertImageToBase64',
+    url: src,
+  })
+
+  return result
+}
+
 export async function detectQRCodeFromCanvas(canvas: HTMLCanvasElement) {
   const dataUrl = canvas.toDataURL('image/png')
 
@@ -15,8 +32,9 @@ export async function detectQRCodeFromCanvas(canvas: HTMLCanvasElement) {
 
 export async function detectQRCodeFromImage(image: HTMLImageElement) {
   try {
+    const base64url = await getImageBase64(image.src)
     const codeReader = new BrowserQRCodeReader()
-    const result = await codeReader.decodeFromImageElement(image)
+    const result = await codeReader.decodeFromImageUrl(base64url)
     return result.getText()
   } catch (err) {
     console.error('No QR code found:', err)
