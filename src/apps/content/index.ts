@@ -1,48 +1,23 @@
-import type { NotifyRequest } from '@/types'
-import { createPinia, setActivePinia } from 'pinia'
-import Toastify from 'toastify-js'
-import { vaildIsImage } from '@/utils/vaild'
-import { useStore } from './store'
-import { createVueApp } from './utils'
+import type { ContentRequest, NotifyRequest } from '@/shared/types'
+import { createPinia } from 'pinia'
+import { ContentMessageAction } from '@/shared/types'
+import { createVueApp, notify } from '@/shared/utils'
+import { useContextMenu } from './composables'
 import 'toastify-js/src/toastify.css'
 
 const pinia = createPinia()
+useContextMenu(pinia)
 
 // 監聽來自 background script 的消息
-chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
+chrome.runtime.onMessage.addListener((request: ContentRequest) => {
   const { action } = request
 
-  if (action === 'openModal') {
+  if (action === ContentMessageAction.OpenModal) {
     createVueApp(pinia)
   }
 
-  if (action === 'notify') {
+  if (action === ContentMessageAction.Notify) {
     const { data: { message } } = request as NotifyRequest
-
-    Toastify({
-      text: message,
-      duration: 3000,
-      gravity: 'top',
-      position: 'right',
-      style: {
-        background: 'red',
-      },
-    }).showToast()
+    notify(message)
   }
-})
-
-document.addEventListener('contextmenu', (event) => {
-  const element = event.target as HTMLElement
-  const isImage = vaildIsImage(element)
-
-  if (isImage) {
-    setActivePinia(pinia)
-    const store = useStore()
-    store.element = element
-  }
-
-  chrome.runtime.sendMessage({
-    action: 'updateContextMenu',
-    show: isImage,
-  })
 })

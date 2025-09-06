@@ -1,4 +1,6 @@
+import type { ConvertImageToBase64Request } from '@/shared/types'
 import { BrowserQRCodeReader } from '@zxing/browser'
+import { BackgroundMessageAction } from '@/shared/types'
 
 function isBase64Image(url: string): boolean {
   return /^data:image\/[a-zA-Z]+;base64,/.test(url)
@@ -9,9 +11,9 @@ async function getImageBase64(src: string): Promise<string> {
     return src // 已經是 base64
   }
 
-  const result = await chrome.runtime.sendMessage({
-    action: 'convertImageToBase64',
-    url: src,
+  const result = await chrome.runtime.sendMessage<ConvertImageToBase64Request>({
+    action: BackgroundMessageAction.ConvertImageToBase64,
+    data: { url: src },
   })
 
   return result
@@ -56,14 +58,16 @@ export async function detectQRCodeFromBackgroundImage(element: HTMLElement) {
   }
 }
 
-export async function detectQRCodeFromSvg(svg: SVGSVGElement) {
-  try {
-    const dataUrl = svg.toDataURL('image/svg+xml')
-    const codeReader = new BrowserQRCodeReader()
-    const result = await codeReader.decodeFromImageUrl(dataUrl)
-    return result.getText()
-  } catch (err) {
-    console.error('No QR code found:', err)
-    return null
+// 組合函數：根據元素類型自動選擇檢測方法
+export async function detectQRFromElement(element: HTMLElement) {
+  const tag = element.tagName.toLowerCase()
+
+  const detectors = {
+    img: () => detectQRCodeFromImage(element as HTMLImageElement),
+    canvas: () => detectQRCodeFromCanvas(element as HTMLCanvasElement),
+    default: () => detectQRCodeFromBackgroundImage(element),
   }
+
+  const detector = detectors[tag as keyof typeof detectors] || detectors.default
+  return detector()
 }
