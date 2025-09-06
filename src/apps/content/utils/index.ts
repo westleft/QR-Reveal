@@ -1,1 +1,0 @@
-export { createVueApp } from './dom'
