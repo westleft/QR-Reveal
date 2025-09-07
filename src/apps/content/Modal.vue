@@ -2,12 +2,13 @@
 import { onBeforeMount } from 'vue'
 import Loading from '@/shared/components/Loading.vue'
 import Content from './components/Content.vue'
-import { useModalLoading, useQRProcess } from './composables'
+import { useModalLoading, useQRProcess, useTransition } from './composables'
 import { useStore } from './store'
 
 const store = useStore()
 const { data, processQRCode } = useQRProcess()
 const { isModalLoading, setModalLoading, closeModal } = useModalLoading()
+const { isTransitioning, handleTransition } = useTransition()
 
 onBeforeMount(async () => {
   await processQRCode(store.element as HTMLElement)
@@ -16,12 +17,14 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="modal" @click.self="closeModal">
-    <div class="modal-content">
-      <Loading v-if="isModalLoading" />
-      <Content v-else :data="data" />
+  <Transition name="fade" @after-leave="closeModal">
+    <div v-if="isTransitioning" class="modal" @click.self="handleTransition(false)">
+      <div class="modal-content">
+        <Loading v-if="isModalLoading" />
+        <Content v-else :data="data" />
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>
@@ -46,5 +49,14 @@ onBeforeMount(async () => {
   overflow: hidden;
   gap: 12px;
   max-width: 600px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
