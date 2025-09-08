@@ -27,7 +27,7 @@ export async function detectQRCodeFromCanvas(canvas: HTMLCanvasElement) {
     const result = await codeReader.decodeFromImageUrl(dataUrl)
     return result.getText()
   } catch (err) {
-    console.log('No QR code found:', err)
+    console.error('No QR code found:', err)
     return null
   }
 }
@@ -61,7 +61,7 @@ export async function detectQRCodeFromBackgroundImage(element: HTMLElement) {
 // 組合函數：根據元素類型自動選擇檢測方法
 export async function detectQRFromElement(element: HTMLElement) {
   const tag = element.tagName.toLowerCase()
-
+  console.log('tag', tag)
   const detectors = {
     img: () => detectQRCodeFromImage(element as HTMLImageElement),
     canvas: () => detectQRCodeFromCanvas(element as HTMLCanvasElement),

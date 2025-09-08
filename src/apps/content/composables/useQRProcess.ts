@@ -6,34 +6,43 @@ import { vaildIsURL } from '@/shared/validators'
 export function useQRProcess() {
   const data = ref<QrCodeInfo | null>(null)
 
-  async function processQRCode(element: HTMLElement) {
+  async function detect(element: HTMLElement): Promise<string | null> {
     try {
-      // 檢測 QR 碼
-      const result = await detectQRFromElement(element)
+      return await detectQRFromElement(element)
+    } catch (err) {
+      console.error('QR detect error:', err)
+      return null
+    }
+  }
 
-      if (!result) {
-        return false
-      }
+  async function handleUrl(result: string): Promise<QrCodeInfo> {
+    const websiteInfo = await fetchWebsite(result)
+    return {
+      ...websiteInfo,
+      type: 'website',
+      url: result,
+    }
+  }
 
-      // 判斷是否為 URL
-      const isUrl = vaildIsURL(result)
+  function handleText(result: string): QrCodeInfo {
+    return {
+      type: 'text',
+      text: result,
+    }
+  }
 
-      if (isUrl) {
-        // 獲取網站資訊
-        const websiteInfo = await fetchWebsite(result)
-        data.value = {
-          ...websiteInfo,
-          type: 'website',
-          url: result,
-        }
+  async function processQRCode(element: HTMLElement): Promise<boolean> {
+    const result = await detect(element)
+    if (!result) {
+      return false
+    }
+
+    try {
+      if (vaildIsURL(result)) {
+        data.value = await handleUrl(result)
       } else {
-        // 純文字內容
-        data.value = {
-          type: 'text',
-          text: result,
-        }
+        data.value = handleText(result)
       }
-
       return true
     } catch (err) {
       console.error('QR processing error:', err)

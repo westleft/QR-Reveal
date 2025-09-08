@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
 import Loading from '@/shared/components/Loading.vue'
+import { notify } from '@/shared/utils'
 import Content from './components/Content.vue'
 import { useModalLoading, useQRProcess, useTransition } from './composables'
 import { useStore } from './store'
@@ -10,9 +11,16 @@ const { data, processQRCode } = useQRProcess()
 const { isModalLoading, setModalLoading, closeModal } = useModalLoading()
 const { isTransitioning, handleTransition } = useTransition()
 
-onBeforeMount(async () => {
-  await processQRCode(store.element as HTMLElement)
-  setModalLoading(false)
+onMounted(async () => {
+  const hasQRCode = await processQRCode(store.element as HTMLElement)
+
+  if (hasQRCode) {
+    setModalLoading(false)
+    return
+  }
+
+  handleTransition(false)
+  notify(chrome.i18n.getMessage('no_qr_code_found'))
 })
 </script>
 

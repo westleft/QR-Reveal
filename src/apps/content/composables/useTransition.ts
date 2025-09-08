@@ -8,7 +8,7 @@ export function useTransition() {
   }
 
   onMounted(() => {
-    isTransitioning.value = true
+    handleTransition(true)
   })
 
   return {
