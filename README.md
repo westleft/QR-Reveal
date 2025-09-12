@@ -2,46 +2,24 @@
 
 ![](https://lh3.googleusercontent.com/eN_V7CsXSkUdgfbaDC2Sqa8te6pOKNMwLsQW5CKXDORt05ftLKkUyKylXJcWc19QDBVnNQDZe43vtT4Is2S-OBZM3g)
 
-一個用於檢測和顯示網頁中 QR 碼的 Chrome Extension。
+QR Reveal is a Chrome Extension that lets you instantly detect and reveal QR codes on any webpage.
+No more reaching for your phone — just right-click and scan directly in the browser.
 
-安裝連結：[點我](https://chromewebstore.google.com/detail/%E6%8E%83%E7%A2%BC%E5%BF%AB%E8%AE%80-qr-reveal/mkgfigepghcfkgnhlpjlijodchlohhep)
+## 🚀 Features
+ * Right-click to scan QR codes on webpages
+ * Instantly decode and reveal the content
+ * Open links automatically in a new tab
 
-## 技術棧
+## 📥 Installation
 
-- Vue 3 + TypeScript + Vite
-- Chrome Extension Manifest V3
-- 熱更新開發環境
+Install from [Chrome Web Store](https://chromewebstore.google.com/detail/%E6%8E%83%E7%A2%BC%E5%BF%AB%E8%AE%80-qr-reveal/mkgfigepghcfkgnhlpjlijodchlohhep)
 
-## 快速開始
+## 💡 Feedback & Issues
 
-### 安裝依賴
-```bash
-pnpm install
-```
+Found a bug or have suggestions?
 
-### 開發模式（支持熱更新）
-```bash
-pnpm run dev:extension
-```
+## 👉 Submit an Issue on GitHub
 
-### 構建生產版本
-```bash
-pnpm run build:extension
-```
+[https://github.com/westleft/QR-Reveal/issues](https://github.com/westleft/QR-Reveal/issues)
 
-## 開發指南
 
-詳細的開發指南請參考 [DEVELOPMENT.md](./DEVELOPMENT.md)
-
-## 功能特性
-
-- 🔍 自動檢測網頁中的 QR 碼
-- 🖱️ 點擊顯示 QR 碼內容
-- ⚡ 熱更新開發環境
-- 🎨 現代化的 Vue 3 界面
-
-## github action 測試
-
-```shell
-act release -e .github/test_events/release_event.json
-```
