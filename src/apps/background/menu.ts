@@ -10,6 +10,13 @@ export function createMenu() {
   })
 
   chrome.contextMenus.create({
+    id: 'selectArea',
+    title: getMessage('select_area'),
+    contexts: ['all'],
+    type: 'normal',
+  })
+
+  chrome.contextMenus.create({
     id: 'separator',
     type: 'separator',
     contexts: ['all'],

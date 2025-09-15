@@ -2,10 +2,12 @@ export enum ContentMessageAction {
   OpenModal = 'openModal',
   VaildQRCode = 'vaildQRCode',
   Notify = 'notify',
+  SelectArea = 'selectArea',
 }
 
 export enum ClickedMessageAction {
   OpenModal = 'openModal',
+  SelectArea = 'selectArea',
 }
 
 export type NotifyRequest = {
@@ -17,4 +19,8 @@ export type OpenModalRequest = {
   action: ContentMessageAction.OpenModal
 }
 
-export type ContentRequest = NotifyRequest | OpenModalRequest
+export type SelectAreaRequest = {
+  action: ContentMessageAction.SelectArea
+}
+
+export type ContentRequest = NotifyRequest | OpenModalRequest | SelectAreaRequest

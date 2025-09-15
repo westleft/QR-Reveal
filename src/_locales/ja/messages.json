@@ -8,6 +8,9 @@
   "detect_qr_code": {
     "message": "QRコードを検出"
   },
+  "select_area": {
+    "message": "選取區域QRコードを検出"
+  },
   "setting": {
     "message": "詳細設定（開発中）"
   },

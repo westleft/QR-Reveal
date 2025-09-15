@@ -2,7 +2,7 @@ import type { BackgroundRequest } from '@/shared/types'
 import { BackgroundMessageAction } from '@/shared/types'
 import { clickedHandlerMap } from './clicked-handler'
 import { createMenu } from './menu'
-import { handleConvertImageToBase64, handleFetchWebsite, handleUpdateContextMenu } from './message-handler'
+import { handleCaptureVisibleTab, handleConvertImageToBase64, handleFetchWebsite, handleUpdateContextMenu } from './message-handler'
 
 createMenu()
 
@@ -19,6 +19,10 @@ chrome.runtime.onMessage.addListener((message: BackgroundRequest, _sender, sendR
 
   if (action === BackgroundMessageAction.UpdateContextMenu) {
     handleUpdateContextMenu(message)
+  }
+
+  if (action === BackgroundMessageAction.CaptureVisibleTab) {
+    handleCaptureVisibleTab(sendResponse)
   }
 
   return true
