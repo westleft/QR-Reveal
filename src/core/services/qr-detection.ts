@@ -58,10 +58,21 @@ export async function detectQRCodeFromBackgroundImage(element: HTMLElement) {
   }
 }
 
+export async function detectQRCodeFromBase64(base64: string) {
+  try {
+    const codeReader = new BrowserQRCodeReader()
+    const result = await codeReader.decodeFromImageUrl(base64)
+    return result.getText()
+  } catch (err) {
+    console.error('No QR code found:', err)
+    return null
+  }
+}
+
 // 組合函數：根據元素類型自動選擇檢測方法
 export async function detectQRFromElement(element: HTMLElement) {
   const tag = element.tagName.toLowerCase()
-  console.log('tag', tag)
+
   const detectors = {
     img: () => detectQRCodeFromImage(element as HTMLImageElement),
     canvas: () => detectQRCodeFromCanvas(element as HTMLCanvasElement),

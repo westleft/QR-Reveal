@@ -16,3 +16,7 @@ export function handleFetchWebsite(message: FetchWebsiteRequest, sendResponse: S
 export function handleConvertImageToBase64(message: ConvertImageToBase64Request, sendResponse: SendResponse) {
   imageUrlToBase64(message.data.url).then(sendResponse)
 }
+
+export function handleCaptureVisibleTab(sendResponse: SendResponse) {
+  chrome.tabs.captureVisibleTab().then(sendResponse)
+}

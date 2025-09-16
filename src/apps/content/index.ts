@@ -2,7 +2,8 @@ import type { ContentRequest, NotifyRequest } from '@/shared/types'
 import { createPinia } from 'pinia'
 import { ContentMessageAction } from '@/shared/types'
 import { createVueApp, notify } from '@/shared/utils'
-import { useContextMenu } from './composables'
+import { useContextMenu, useSelectArea } from './composables'
+import { useStore } from './store'
 import 'toastify-js/src/toastify.css'
 
 const pinia = createPinia()
@@ -19,5 +20,12 @@ chrome.runtime.onMessage.addListener((request: ContentRequest) => {
   if (action === ContentMessageAction.Notify) {
     const { data: { message } } = request as NotifyRequest
     notify(message)
+  }
+
+  if (action === ContentMessageAction.SelectArea) {
+    useSelectArea((base64: string) => {
+      useStore().setDetectTarget(base64)
+      createVueApp(pinia)
+    })
   }
 })

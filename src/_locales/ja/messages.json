@@ -6,7 +6,10 @@
     "message": "クリック右クリックで、QRコードを素早くスキャンし、リンクを開きます"
   },
   "detect_qr_code": {
-    "message": "QRコードを検出"
+    "message": "画像検出"
+  },
+  "select_area": {
+    "message": "選取區域検出"
   },
   "setting": {
     "message": "詳細設定（開発中）"

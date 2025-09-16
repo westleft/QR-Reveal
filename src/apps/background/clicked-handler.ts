@@ -9,6 +9,13 @@ function openModal(tabId: number) {
   })
 }
 
+function selectArea(tabId: number) {
+  chrome.tabs.sendMessage(tabId, {
+    action: ClickedMessageAction.SelectArea,
+  })
+}
+
 export const clickedHandlerMap = {
   detectQRcode: openModal,
+  selectArea,
 }

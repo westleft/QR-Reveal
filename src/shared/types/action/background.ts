@@ -2,6 +2,7 @@ export enum BackgroundMessageAction {
   UpdateContextMenu = 'updateContextMenu',
   FetchWebsite = 'fetchWebsite',
   ConvertImageToBase64 = 'convertImageToBase64',
+  CaptureVisibleTab = 'captureVisibleTab',
 }
 
 export type UpdateContextMenuRequest = {
@@ -19,4 +20,8 @@ export type ConvertImageToBase64Request = {
   data: { url: string }
 }
 
-export type BackgroundRequest = UpdateContextMenuRequest | FetchWebsiteRequest | ConvertImageToBase64Request
+export type CaptureVisibleTabRequest = {
+  action: BackgroundMessageAction.CaptureVisibleTab
+}
+
+export type BackgroundRequest = UpdateContextMenuRequest | FetchWebsiteRequest | ConvertImageToBase64Request | CaptureVisibleTabRequest

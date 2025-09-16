@@ -1,3 +1,5 @@
+import { BackgroundMessageAction } from '../types'
+
 function matchRegex(regex: RegExp, html: string) {
   const match = html.match(regex)
   return match?.[1]?.trim()
@@ -23,4 +25,11 @@ export async function fetchWebsite(url: string) {
     console.error('error：', error)
     throw error
   }
+}
+
+export async function getScreenImage() {
+  const image = await chrome.runtime.sendMessage({
+    action: BackgroundMessageAction.CaptureVisibleTab,
+  })
+  return image
 }

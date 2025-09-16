@@ -6,7 +6,10 @@
     "message": "Click right-click to quickly scan QR codes on web pages and open links"
   },
   "detect_qr_code": {
-    "message": "Detect QR Code"
+    "message": "Detect Image"
+  },
+  "select_area": {
+    "message": "Select Area Detect"
   },
   "setting": {
     "message": "Setting"
