@@ -10,8 +10,8 @@ export function cropBase64Image(base64: string, rect: Rect) {
 
       const ctx = canvas.getContext('2d')!
 
-      const scaleX = img.width / document.documentElement.scrollWidth
-      const scaleY = img.height / document.documentElement.scrollHeight
+      const scaleX = img.width / window.innerWidth
+      const scaleY = img.height / window.innerHeight
 
       const scaledRect = {
         x: rect.x * scaleX,

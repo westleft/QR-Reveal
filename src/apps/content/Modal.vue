@@ -6,13 +6,13 @@ import Content from './components/Content.vue'
 import { useModalLoading, useQRProcess, useTransition } from './composables'
 import { useStore } from './store'
 
-const store = useStore()
+const { detectTarget } = useStore()
 const { data, processQRCode } = useQRProcess()
 const { isModalLoading, setModalLoading, closeModal } = useModalLoading()
 const { isTransitioning, handleTransition } = useTransition()
 
 onMounted(async () => {
-  const hasQRCode = await processQRCode(store.element as HTMLElement)
+  const hasQRCode = await processQRCode(detectTarget!)
 
   if (hasQRCode) {
     setModalLoading(false)

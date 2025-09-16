@@ -2,7 +2,11 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useStore = defineStore('store', () => {
-  const element = ref<HTMLElement | null>(null)
+  const detectTarget = ref<HTMLElement | string | null>(null)
 
-  return { element }
+  function setDetectTarget(val: HTMLElement | string) {
+    detectTarget.value = val
+  }
+
+  return { detectTarget, setDetectTarget }
 })

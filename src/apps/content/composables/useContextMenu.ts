@@ -9,11 +9,11 @@ export function useContextMenu(pinia: Pinia) {
   document.addEventListener('contextmenu', (event) => {
     const element = event.target as HTMLElement
     const isImage = vaildIsImage(element)
+    setActivePinia(pinia)
 
     if (isImage) {
-      setActivePinia(pinia)
       const store = useStore()
-      store.element = element
+      store.setDetectTarget(element)
     }
 
     chrome.runtime.sendMessage<UpdateContextMenuRequest>({

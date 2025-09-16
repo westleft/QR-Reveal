@@ -2,7 +2,7 @@ import type { Rect } from '@/core/services/crop'
 import { cropBase64Image } from '@/core/services'
 import { getScreenImage } from '@/shared/utils'
 
-export function useSelectArea() {
+export function useSelectArea(callback: (base64: string) => void) {
   const selectionBox = createSelectionBox()
   applyInitialStyles(selectionBox)
 
@@ -12,8 +12,8 @@ export function useSelectArea() {
   let previousUserSelect = ''
 
   const onMouseMove = (e: MouseEvent) => {
-    const currentX = e.pageX
-    const currentY = e.pageY
+    const currentX = e.clientX
+    const currentY = e.clientY
 
     updateCursorMask(selectionBox, currentX, currentY)
 
@@ -26,8 +26,8 @@ export function useSelectArea() {
   }
 
   const onMouseUp = async (e: MouseEvent) => {
-    const endX = e.pageX
-    const endY = e.pageY
+    const endX = e.clientX
+    const endY = e.clientY
 
     const rect: Rect = computeRect(startX, startY, endX, endY)
     // eslint-disable-next-line no-console
@@ -39,8 +39,7 @@ export function useSelectArea() {
     requestAnimationFrame(async () => {
       const image = await getScreenImage()
       const base64 = await cropBase64Image(image, rect)
-      // eslint-disable-next-line no-console
-      console.log(base64)
+      callback(base64)
     })
   }
 
@@ -50,8 +49,8 @@ export function useSelectArea() {
     }
     initialized = true
 
-    startX = e.pageX
-    startY = e.pageY
+    startX = e.clientX
+    startY = e.clientY
 
     previousUserSelect = document.body.style.userSelect
     document.body.style.userSelect = 'none'
@@ -86,28 +85,40 @@ function createSelectionBox() {
 }
 
 function applyInitialStyles(div: HTMLDivElement) {
-  div.style.border = '2px dashed #4a90e2'
-  div.style.background = 'rgba(74, 144, 226, 0.2)'
-  div.style.pointerEvents = 'none'
-  div.style.position = 'absolute'
-  div.style.zIndex = '99997'
-  // 以透明底 + mask 來呈現滑鼠圓形聚焦效果
-  div.style.background = 'transparent'
-  div.hidden = true
+  div.style.cssText = `
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+    position: fixed;
+    mask-image: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff);
+    mask-size: 0px 0px, 100%;
+    mask-position: 0px 0px, 0;
+    mask-repeat: no-repeat;
+    mask-composite: exclude;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+  `
 }
 
 function updateCursorMask(div: HTMLDivElement, x: number, y: number) {
-  const mask = `radial-gradient(circle at ${x}px ${y}px, transparent 0, transparent 50px, #000 50px)`
-  // @ts-expect-error - webkit prefix for Safari
-  div.style.webkitMask = mask
-  div.style.mask = mask
+  // const mask = `radial-gradient(circle at ${x}px ${y}px, transparent 0, transparent 50px, #000 50px)`
+  const maskSize = `${200}px ${200}px, 100% 100%`
+  const maskPosition = `${x}px ${y}px, 0`
+  div.style.maskSize = maskSize
+  div.style.maskPosition = maskPosition
 }
 
 function updateSelectionBox(div: HTMLDivElement, rect: Rect) {
-  div.style.left = `${rect.x}px`
-  div.style.top = `${rect.y}px`
-  div.style.width = `${rect.width}px`
-  div.style.height = `${rect.height}px`
+  const maskSize = `${rect.width}px ${rect.height}px, 100% 100%`
+  const maskPosition = `${rect.x}px ${rect.y}px, 0`
+  div.style.maskSize = maskSize
+  div.style.maskPosition = maskPosition
+  // div.style.left = `${rect.x}px`
+  // div.style.top = `${rect.y}px`
+  // div.style.width = `${rect.width}px`
+  // div.style.height = `${rect.height}px`
 }
 
 function computeRect(startX: number, startY: number, endX: number, endY: number): Rect {

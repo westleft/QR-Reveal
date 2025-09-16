@@ -6,10 +6,10 @@
     "message": "點選右鍵，可快速掃描網頁上的 QR Code，並開啟連結"
   },
   "detect_qr_code": {
-    "message": "偵測 QR Code"
+    "message": "圖片偵測"
   },
   "select_area": {
-    "message": "選取區域偵測 QR Code"
+    "message": "框選區域偵測"
   },
   "setting": {
     "message": "進階設定（開發中）"
