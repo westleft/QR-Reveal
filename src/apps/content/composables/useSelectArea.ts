@@ -122,10 +122,9 @@ function updateSelectionBox(div: HTMLDivElement, rect: Rect) {
 }
 
 function computeRect(startX: number, startY: number, endX: number, endY: number): Rect {
-  // + 2 為選取框的邊框寬度
   return {
-    x: Math.min(startX, endX) + 2,
-    y: Math.min(startY, endY) + 2,
+    x: Math.min(startX, endX),
+    y: Math.min(startY, endY),
     width: Math.abs(startX - endX),
     height: Math.abs(startY - endY),
   }
