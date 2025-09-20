@@ -20,6 +20,9 @@
   "open_in_new_tab": {
     "message": "Open in new tab"
   },
+  "content_copied_to_clipboard": {
+    "message": "Content copied to clipboard"
+  },
   "popup_slide_1_text": {
     "message": "Right-click on the QR Code"
   },

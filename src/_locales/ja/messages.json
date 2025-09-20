@@ -20,6 +20,9 @@
   "open_in_new_tab": {
     "message": "新しいタブで開く"
   },
+  "content_copied_to_clipboard": {
+    "message": "コンテンツがクリップボードにコピーされました"
+  },
   "popup_slide_1_text": {
     "message": "QRコード上で右クリック"
   },

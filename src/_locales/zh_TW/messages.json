@@ -20,6 +20,9 @@
   "open_in_new_tab": {
     "message": "在新分頁開啟"
   },
+  "content_copied_to_clipboard": {
+    "message": "內容已複製到剪貼簿"
+  },
   "popup_slide_1_text": {
     "message": "在 QR Code 上按下右鍵"
   },
