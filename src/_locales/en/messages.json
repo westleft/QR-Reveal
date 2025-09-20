@@ -20,6 +20,15 @@
   "open_in_new_tab": {
     "message": "Open in new tab"
   },
+  "content_copy_text_title": {
+    "message": "Scan Result"
+  },
+  "content_copy_text_description": {
+    "message": "The result of the QR code scan is as follows:"
+  },
+  "content_copy_text": {
+    "message": "Copy Text"
+  },
   "content_copied_to_clipboard": {
     "message": "Content copied to clipboard"
   },

@@ -20,6 +20,15 @@
   "open_in_new_tab": {
     "message": "新しいタブで開く"
   },
+  "content_copy_text_title": {
+    "message": "スキャン結果"
+  },
+  "content_copy_text_description": {
+    "message": "QRコードのスキャン結果は次のとおりです:"
+  },
+  "content_copy_text": {
+    "message": "テキストをコピー"
+  },
   "content_copied_to_clipboard": {
     "message": "コンテンツがクリップボードにコピーされました"
   },
