@@ -1,29 +1,54 @@
 <script setup lang="ts">
 import type { QrCodeInfo } from '@/shared/types'
+import { notify } from '@/shared/utils'
 
 const { data } = defineProps<{
   data: QrCodeInfo | null
 }>()
+
+async function copyText(text: string) {
+  try {
+    await navigator.clipboard.writeText(text)
+    notify(chrome.i18n.getMessage('copied_to_clipboard'))
+  } catch (error) {
+    console.error('Error copying text:', error)
+  }
+}
 
 const { getMessage } = chrome.i18n
 </script>
 
 <template>
   <div class="modal-info">
-    <!-- <img :src="data?.qrcodeUrl" class="modal-info__qrcode" alt="QR Code Image"> -->
-    <a v-if="data?.type === 'website'" target="_blank" class="modal-info__content" :href="data?.url">
+    <div v-if="data?.type === 'website'" class="modal-info__content" :href="data?.url">
       <img v-if="data?.image" :src="data?.image" alt="" class="modal-info__image">
       <div v-else class="image__placeholder">
         <p>image not found</p>
       </div>
-      <p class="modal-info__title">
-        {{ data?.title || 'No title' }}
-      </p>
-      <p class="modal-info__description">{{ data?.description || 'No description' }}</p>
-      <div class="modal-info__btn">
-        <button>{{ getMessage('open_in_new_tab') }}</button>
+      <div class="modal-info__wrapper">
+        <p class="modal-info__title">
+          {{ data?.title || 'No title' }}
+        </p>
+        <p class="modal-info__description">
+          {{ data?.description || 'No description' }}
+        </p>
+        <a class="modal-info__btn" target="_blank" :href="data?.url">
+          {{ getMessage('open_in_new_tab') }}
+        </a>
+
+        <p class="modal-info__url">
+          URL
+        </p>
+        <div class="modal-info__url-wrapper">
+          <p class="modal-info__url-text">
+            {{ data?.url }}
+          </p>
+          <div class="modal-info__url-copy" @click="copyText(data?.url || '')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l133.5 0c4.2 0 8.3 1.7 11.3 4.7l58.5 58.5c3 3 4.7 7.1 4.7 11.3L400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-197.5c0-17-6.7-33.3-18.7-45.3L370.7 18.7C358.7 6.7 342.5 0 325.5 0L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-48 0 0 16c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l16 0 0-48-16 0z" /></svg>
+          </div>
+        </div>
       </div>
-    </a>
+    </div>
 
     <div v-if="data?.type === 'text'" class="modal-info__content">
       <p class="modal-info__title">
@@ -41,16 +66,18 @@ const { getMessage } = chrome.i18n
   .modal-info__content {
     display: flex;
     flex-direction: column;
-    gap: 10px !important;
-    min-width: 300px;
+    width: 480px;
   }
 
-  .modal-info__qrcode {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+  .modal-info__image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
     object-position: center;
-    margin-right: 12px;
+  }
+
+  .modal-info__wrapper {
+    padding: 20px;
   }
 
   .modal-info__title {
@@ -60,9 +87,10 @@ const { getMessage } = chrome.i18n
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     white-space: normal;
+    margin-bottom: 12px !important;
   }
 
   .modal-info__description {
@@ -73,31 +101,69 @@ const { getMessage } = chrome.i18n
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     white-space: normal;
-  }
-
-  .modal-info__image {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    object-position: center;
+    margin-bottom: 20px !important;
   }
 
   .modal-info__btn {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    background-color: #5080e1;
+    color: #fff;
+    padding: 12px 24px !important;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.2s;
+    margin-bottom: 20px !important;
+    &:hover {
+      background-color: #4070d1;
+    }
+  }
 
-    button {
-      border: none;
-      background-color: #000;
-      color: #fff;
-      padding: 8px 24px !important;
-      border-radius: 12px;
+  .modal-info__url {
+    color: #666;
+    margin: 0 0 4px 0;
+    font-size: 14px;
+  }
+
+  .modal-info__url-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    gap: 4px;
+    font-size: 14px;
+    color: #666;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 4px 12px;
+
+    .modal-info__url-text {
+      overflow: auto;
+      margin-right: 32px;
+    }
+
+    .modal-info__url-copy {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
       cursor: pointer;
+      background-color: #fff;
+
+      svg {
+        width: 80%;
+        opacity: 0.8;
+      }
     }
   }
 }
@@ -109,7 +175,6 @@ const { getMessage } = chrome.i18n
   width: 100%;
   height: 140px !important;
   background-color: #f0f0f0;
-  border-radius: 12px;
   color: #666 !important;
 }
 </style>

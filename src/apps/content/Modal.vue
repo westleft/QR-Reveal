@@ -52,7 +52,6 @@ onMounted(async () => {
 .modal-content {
   background-color: white;
   border-radius: 12px;
-  padding: 20px;
   color: #666;
   overflow: hidden;
   gap: 12px;
