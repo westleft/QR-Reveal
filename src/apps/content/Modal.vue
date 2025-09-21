@@ -22,6 +22,7 @@ onMounted(async () => {
   handleTransition(false)
   notify(chrome.i18n.getMessage('no_qr_code_found'))
 })
+console.log(chrome.i18n.getMessage('name'))
 </script>
 
 <template>

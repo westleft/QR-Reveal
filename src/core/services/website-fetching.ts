@@ -24,7 +24,11 @@ export async function backgroundFetchWebsite(url: string) {
     }
   } catch (error) {
     console.error('error：', error)
-    throw error
+    return {
+      title: '',
+      description: '',
+      image: '',
+    }
   }
 }
 
