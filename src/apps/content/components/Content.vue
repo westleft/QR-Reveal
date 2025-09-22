@@ -177,6 +177,11 @@ const { getMessage } = chrome.i18n
     .modal-info__url-text {
       overflow: auto;
       margin-right: 32px;
+      white-space: nowrap;
+      ::selection {
+        color: white;
+        background: #007bff;
+      }
     }
 
     .modal-info__url-copy {
@@ -262,6 +267,5 @@ const { getMessage } = chrome.i18n
     color: #666;
     margin: 0px !important;
   }
-
 }
 </style>
