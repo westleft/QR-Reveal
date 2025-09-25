@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "右键点击即可快速扫描网页上的二维码并打开链接"
+  },
+  "detect_qr_code": {
+    "message": "检测图片"
+  },
+  "select_area": {
+    "message": "选区检测"
+  },
+  "setting": {
+    "message": "设置"
+  },
+  "no_qr_code_found": {
+    "message": "未发现二维码"
+  },
+  "open_in_new_tab": {
+    "message": "在新标签页中打开"
+  },
+  "content_copy_text_title": {
+    "message": "扫描结果"
+  },
+  "content_copy_text_description": {
+    "message": "二维码扫描结果如下："
+  },
+  "content_copy_text": {
+    "message": "复制文本"
+  },
+  "content_copied_to_clipboard": {
+    "message": "内容已复制到剪贴板"
+  },
+  "popup_slide_1_text": {
+    "message": "在二维码上点击右键"
+  },
+  "popup_slide_2_text": {
+    "message": "点击“检测二维码”查看内容"
+  },
+  "popup_slide_1_button_text": {
+    "message": "下一步"
+  },
+  "popup_slide_2_button_text": {
+    "message": "立即试试！"
+  },
+  "popup_help_text": {
+    "message": "遇到问题？"
+  },
+  "popup_help_link_text": {
+    "message": "向我们反馈"
+  }
+}
+

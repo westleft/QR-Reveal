@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "웹페이지에서 오른쪽 클릭으로 QR 코드를 빠르게 스캔하고 링크를 엽니다"
+  },
+  "detect_qr_code": {
+    "message": "이미지 감지"
+  },
+  "select_area": {
+    "message": "영역 선택 감지"
+  },
+  "setting": {
+    "message": "설정"
+  },
+  "no_qr_code_found": {
+    "message": "QR 코드를 찾을 수 없습니다"
+  },
+  "open_in_new_tab": {
+    "message": "새 탭에서 열기"
+  },
+  "content_copy_text_title": {
+    "message": "스캔 결과"
+  },
+  "content_copy_text_description": {
+    "message": "QR 코드 스캔 결과는 다음과 같습니다:"
+  },
+  "content_copy_text": {
+    "message": "텍스트 복사"
+  },
+  "content_copied_to_clipboard": {
+    "message": "콘텐츠가 클립보드에 복사되었습니다"
+  },
+  "popup_slide_1_text": {
+    "message": "QR 코드에서 마우스 오른쪽 버튼 클릭"
+  },
+  "popup_slide_2_text": {
+    "message": "내용을 보려면 \"QR 코드 감지\"를 클릭하세요"
+  },
+  "popup_slide_1_button_text": {
+    "message": "다음 단계"
+  },
+  "popup_slide_2_button_text": {
+    "message": "지금 바로 시도!"
+  },
+  "popup_help_text": {
+    "message": "문제가 있나요?"
+  },
+  "popup_help_link_text": {
+    "message": "문의하기"
+  }
+}
+

@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "Clique com o botão direito para escanear rapidamente códigos QR nas páginas e abrir links"
+  },
+  "detect_qr_code": {
+    "message": "Detectar imagem"
+  },
+  "select_area": {
+    "message": "Detectar área selecionada"
+  },
+  "setting": {
+    "message": "Configurações"
+  },
+  "no_qr_code_found": {
+    "message": "Nenhum código QR encontrado"
+  },
+  "open_in_new_tab": {
+    "message": "Abrir em nova guia"
+  },
+  "content_copy_text_title": {
+    "message": "Resultado da leitura"
+  },
+  "content_copy_text_description": {
+    "message": "O resultado da leitura do código QR é o seguinte:"
+  },
+  "content_copy_text": {
+    "message": "Copiar texto"
+  },
+  "content_copied_to_clipboard": {
+    "message": "Conteúdo copiado para a área de transferência"
+  },
+  "popup_slide_1_text": {
+    "message": "Clique com o botão direito no código QR"
+  },
+  "popup_slide_2_text": {
+    "message": "Clique em \"Detectar código QR\" para ver o conteúdo"
+  },
+  "popup_slide_1_button_text": {
+    "message": "Próxima etapa"
+  },
+  "popup_slide_2_button_text": {
+    "message": "Experimente agora!"
+  },
+  "popup_help_text": {
+    "message": "Teve algum problema?"
+  },
+  "popup_help_link_text": {
+    "message": "Informe-nos"
+  }
+}
+
