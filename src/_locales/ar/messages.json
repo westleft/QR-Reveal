@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "انقر بزر الماوس الأيمن لمسح رموز الاستجابة السريعة على صفحات الويب بسرعة وفتح الروابط"
+  },
+  "detect_qr_code": {
+    "message": "اكتشاف الصورة"
+  },
+  "select_area": {
+    "message": "اكتشاف منطقة محددة"
+  },
+  "setting": {
+    "message": "الإعدادات"
+  },
+  "no_qr_code_found": {
+    "message": "لم يتم العثور على رمز QR"
+  },
+  "open_in_new_tab": {
+    "message": "فتح في علامة تبويب جديدة"
+  },
+  "content_copy_text_title": {
+    "message": "نتيجة المسح"
+  },
+  "content_copy_text_description": {
+    "message": "نتيجة مسح رمز QR كالتالي:"
+  },
+  "content_copy_text": {
+    "message": "نسخ النص"
+  },
+  "content_copied_to_clipboard": {
+    "message": "تم نسخ المحتوى إلى الحافظة"
+  },
+  "popup_slide_1_text": {
+    "message": "انقر بزر الماوس الأيمن على رمز QR"
+  },
+  "popup_slide_2_text": {
+    "message": "انقر \"اكتشاف رمز QR\" لعرض المحتوى"
+  },
+  "popup_slide_1_button_text": {
+    "message": "الخطوة التالية"
+  },
+  "popup_slide_2_button_text": {
+    "message": "جرّبه الآن!"
+  },
+  "popup_help_text": {
+    "message": "هل تواجه أي مشاكل؟"
+  },
+  "popup_help_link_text": {
+    "message": "أبلغنا"
+  }
+}
+

@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "वेब पेज पर QR कोड को जल्दी से स्कैन करने और लिंक खोलने के लिए राइट-क्लिक करें"
+  },
+  "detect_qr_code": {
+    "message": "छवि पहचानें"
+  },
+  "select_area": {
+    "message": "चयनित क्षेत्र पहचान"
+  },
+  "setting": {
+    "message": "सेटिंग"
+  },
+  "no_qr_code_found": {
+    "message": "कोई QR कोड नहीं मिला"
+  },
+  "open_in_new_tab": {
+    "message": "नई टैब में खोलें"
+  },
+  "content_copy_text_title": {
+    "message": "स्कैन परिणाम"
+  },
+  "content_copy_text_description": {
+    "message": "QR कोड स्कैन का परिणाम इस प्रकार है:"
+  },
+  "content_copy_text": {
+    "message": "पाठ कॉपी करें"
+  },
+  "content_copied_to_clipboard": {
+    "message": "सामग्री क्लिपबोर्ड पर कॉपी की गई"
+  },
+  "popup_slide_1_text": {
+    "message": "QR कोड पर राइट-क्लिक करें"
+  },
+  "popup_slide_2_text": {
+    "message": "सामग्री देखने के लिए \"QR कोड पहचानें\" पर क्लिक करें"
+  },
+  "popup_slide_1_button_text": {
+    "message": "अगला कदम"
+  },
+  "popup_slide_2_button_text": {
+    "message": "अभी आज़माएँ!"
+  },
+  "popup_help_text": {
+    "message": "कोई समस्या है?"
+  },
+  "popup_help_link_text": {
+    "message": "हमें रिपोर्ट करें"
+  }
+}
+

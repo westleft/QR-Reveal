@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "Щёлкните правой кнопкой мыши, чтобы быстро сканировать QR-коды на веб-страницах и открывать ссылки"
+  },
+  "detect_qr_code": {
+    "message": "Обнаружить изображение"
+  },
+  "select_area": {
+    "message": "Обнаружить в выделенной области"
+  },
+  "setting": {
+    "message": "Настройки"
+  },
+  "no_qr_code_found": {
+    "message": "QR-код не найден"
+  },
+  "open_in_new_tab": {
+    "message": "Открыть в новой вкладке"
+  },
+  "content_copy_text_title": {
+    "message": "Результат сканирования"
+  },
+  "content_copy_text_description": {
+    "message": "Результат сканирования QR-кода следующий:"
+  },
+  "content_copy_text": {
+    "message": "Копировать текст"
+  },
+  "content_copied_to_clipboard": {
+    "message": "Содержимое скопировано в буфер обмена"
+  },
+  "popup_slide_1_text": {
+    "message": "Щёлкните правой кнопкой по QR-коду"
+  },
+  "popup_slide_2_text": {
+    "message": "Нажмите «Обнаружить QR-код», чтобы посмотреть содержимое"
+  },
+  "popup_slide_1_button_text": {
+    "message": "Следующий шаг"
+  },
+  "popup_slide_2_button_text": {
+    "message": "Попробовать сейчас!"
+  },
+  "popup_help_text": {
+    "message": "Возникли проблемы?"
+  },
+  "popup_help_link_text": {
+    "message": "Сообщите нам"
+  }
+}
+

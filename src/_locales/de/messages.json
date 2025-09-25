@@ -1,0 +1,54 @@
+{
+  "name": {
+    "message": "QR Reveal"
+  },
+  "description": {
+    "message": "Klicken Sie mit der rechten Maustaste, um QR-Codes auf Webseiten schnell zu scannen und Links zu öffnen"
+  },
+  "detect_qr_code": {
+    "message": "Bild erkennen"
+  },
+  "select_area": {
+    "message": "Bereich erkennen"
+  },
+  "setting": {
+    "message": "Einstellungen"
+  },
+  "no_qr_code_found": {
+    "message": "Kein QR-Code gefunden"
+  },
+  "open_in_new_tab": {
+    "message": "In neuem Tab öffnen"
+  },
+  "content_copy_text_title": {
+    "message": "Scan-Ergebnis"
+  },
+  "content_copy_text_description": {
+    "message": "Das Ergebnis des QR-Code-Scans lautet:"
+  },
+  "content_copy_text": {
+    "message": "Text kopieren"
+  },
+  "content_copied_to_clipboard": {
+    "message": "Inhalt in die Zwischenablage kopiert"
+  },
+  "popup_slide_1_text": {
+    "message": "Rechtsklick auf den QR-Code"
+  },
+  "popup_slide_2_text": {
+    "message": "Klicken Sie auf \"QR-Code erkennen\", um den Inhalt anzuzeigen"
+  },
+  "popup_slide_1_button_text": {
+    "message": "Nächster Schritt"
+  },
+  "popup_slide_2_button_text": {
+    "message": "Jetzt ausprobieren!"
+  },
+  "popup_help_text": {
+    "message": "Gibt es Probleme?"
+  },
+  "popup_help_link_text": {
+    "message": "Problem melden"
+  }
+}
+
