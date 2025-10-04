@@ -1,6 +1,5 @@
 import type { QrCodeInfo } from '@/shared/types'
 import dayjs from 'dayjs'
-import { v4 as uuidv4 } from 'uuid'
 
 export type StorageData = QrCodeInfo & {
   timestamp?: string
@@ -8,7 +7,7 @@ export type StorageData = QrCodeInfo & {
 
 export function useChromeStorage() {
   const _createUniqueKey = () => {
-    return uuidv4()
+    return Date.now().toString()
   }
 
   const _createTimestamp = () => {
@@ -20,7 +19,7 @@ export function useChromeStorage() {
   }
 
   const getAllStorage = async () => {
-    const result = await chrome.storage.local.get<StorageData>()
+    const result = await chrome.storage.local.get<StorageData[]>()
     return result
   }
 

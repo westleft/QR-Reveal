@@ -9,10 +9,6 @@ const { getMessage } = chrome.i18n
 const { getAllStorage, clearAllStorage } = useChromeStorage()
 const history = ref<StorageData[]>([])
 
-function sortByTimestamp(data: StorageData) {
-  return Object.values(data).sort(a => a.timestamp)
-}
-
 function clearAllHistory() {
   clearAllStorage()
   history.value = []
@@ -21,7 +17,7 @@ function clearAllHistory() {
 onBeforeMount(async () => {
   chrome.tabs.onActivated.addListener(() => window.close())
   const result = await getAllStorage()
-  history.value = sortByTimestamp(result)
+  history.value = result
 })
 </script>
 
