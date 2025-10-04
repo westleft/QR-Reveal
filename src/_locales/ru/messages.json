@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "Сообщите нам"
+  },
+  "side_panel_title": {
+    "message": "История Сканирования"
+  },
+  "side_panel_clear_all_history": {
+    "message": "Очистить Всю Историю"
   }
 }
 

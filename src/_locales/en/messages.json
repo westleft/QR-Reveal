@@ -49,5 +49,11 @@
   },
   "popup_help_link_text": {
     "message": "Report to us"
+  },
+  "side_panel_title": {
+    "message": "Scan History"
+  },
+  "side_panel_clear_all_history": {
+    "message": "Clear All History"
   }
 }

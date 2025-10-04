@@ -28,9 +28,12 @@ onBeforeMount(async () => {
 <template>
   <div id="qr-side-panel">
     <div class="panel-title">
-      <h1><img src="@/assets/images/icon.png" alt="logo">Scan History</h1>
+      <h1>
+        <img src="@/assets/images/icon.png" alt="logo">
+        {{ getMessage('side_panel_title') }}
+      </h1>
       <button @click="clearAllHistory">
-        Clear All History
+        {{ getMessage('side_panel_clear_all_history') }}
       </button>
     </div>
     <ul class="panel-list">

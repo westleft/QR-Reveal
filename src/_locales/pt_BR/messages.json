@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "Informe-nos"
+  },
+  "side_panel_title": {
+    "message": "Histórico de Escaneamento"
+  },
+  "side_panel_clear_all_history": {
+    "message": "Limpar Todo o Histórico"
   }
 }
 

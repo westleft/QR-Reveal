@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "向我们反馈"
+  },
+  "side_panel_title": {
+    "message": "扫描历史"
+  },
+  "side_panel_clear_all_history": {
+    "message": "清除所有历史"
   }
 }
 

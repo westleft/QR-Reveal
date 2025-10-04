@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "أبلغنا"
+  },
+  "side_panel_title": {
+    "message": "تاريخ المسح"
+  },
+  "side_panel_clear_all_history": {
+    "message": "مسح كامل التاريخ"
   }
 }
 

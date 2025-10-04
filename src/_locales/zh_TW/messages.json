@@ -49,5 +49,11 @@
   },
   "popup_help_link_text": {
     "message": "回報我們"
+  },
+  "side_panel_title": {
+    "message": "掃描歷史"
+  },
+  "side_panel_clear_all_history": {
+    "message": "清除所有歷史"
   }
 }

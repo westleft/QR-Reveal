@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "हमें रिपोर्ट करें"
+  },
+  "side_panel_title": {
+    "message": "स्कैन इतिहास"
+  },
+  "side_panel_clear_all_history": {
+    "message": "सभी इतिहास साफ़ करें"
   }
 }
 
