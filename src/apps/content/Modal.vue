@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import Loading from '@/shared/components/Loading.vue'
+import { useChromeStorage } from '@/shared/composables'
 import { notify } from '@/shared/utils'
 import Content from './components/Content.vue'
 import { useModalLoading, useQRProcess, useTransition } from './composables'
 import { useStore } from './store'
 
+const { setStorage } = useChromeStorage()
 const { detectTarget } = useStore()
 const { data, processQRCode } = useQRProcess()
 const { isModalLoading, setModalLoading, closeModal } = useModalLoading()
@@ -16,6 +18,7 @@ onMounted(async () => {
 
   if (hasQRCode) {
     setModalLoading(false)
+    setStorage(data.value!)
     return
   }
 

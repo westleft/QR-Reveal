@@ -20,6 +20,13 @@ export default defineConfig({
       ],
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        options: 'src/apps/options/index.html',
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -15,8 +15,10 @@
     "@types/chrome": "^0.1.1",
     "@vitejs/plugin-basic-ssl": "^2.1.0",
     "@zxing/browser": "^0.1.5",
+    "dayjs": "^1.11.18",
     "pinia": "^3.0.3",
     "toastify-js": "^1.12.0",
+    "uuid": "^13.0.0",
     "vue": "^3.5.17"
   },
   "devDependencies": {
