@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "Signalez-le nous"
+  },
+  "side_panel_title": {
+    "message": "Historique des Scans"
+  },
+  "side_panel_clear_all_history": {
+    "message": "Effacer Tout l'Historique"
   }
 }
 

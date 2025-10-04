@@ -49,5 +49,11 @@
   },
   "popup_help_link_text": {
     "message": "送信する"
+  },
+  "side_panel_title": {
+    "message": "スキャン履歴"
+  },
+  "side_panel_clear_all_history": {
+    "message": "すべての履歴をクリア"
   }
 }

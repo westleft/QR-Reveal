@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "문의하기"
+  },
+  "side_panel_title": {
+    "message": "스캔 기록"
+  },
+  "side_panel_clear_all_history": {
+    "message": "모든 기록 지우기"
   }
 }
 

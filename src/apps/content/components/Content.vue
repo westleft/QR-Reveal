@@ -1,19 +1,10 @@
 <script setup lang="ts">
 import type { QrCodeInfo } from '@/shared/types'
-import { notify } from '@/shared/utils'
+import { copyText } from '@/shared/utils'
 
 const { data } = defineProps<{
   data: QrCodeInfo | null
 }>()
-
-async function copyText(text: string) {
-  try {
-    await navigator.clipboard.writeText(text)
-    notify(chrome.i18n.getMessage('content_copied_to_clipboard'))
-  } catch (error) {
-    console.error('Error copying text:', error)
-  }
-}
 
 const { getMessage } = chrome.i18n
 </script>

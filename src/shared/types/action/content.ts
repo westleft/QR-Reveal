@@ -8,6 +8,7 @@ export enum ContentMessageAction {
 export enum ClickedMessageAction {
   OpenModal = 'openModal',
   SelectArea = 'selectArea',
+  OpenSidePanel = 'openSidePanel',
 }
 
 export type NotifyRequest = {

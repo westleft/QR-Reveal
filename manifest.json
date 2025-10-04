@@ -6,7 +6,9 @@
   "default_locale": "en",
   "permissions": [
     "activeTab",
-    "contextMenus"
+    "contextMenus",
+    "sidePanel",
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -17,6 +19,9 @@
   },
   "action": {
     "default_popup": "src/apps/popup/index.html"
+  },
+  "side_panel": {
+    "default_path": "src/apps/sidePanel/index.html"
   },
   "content_scripts": [
     {

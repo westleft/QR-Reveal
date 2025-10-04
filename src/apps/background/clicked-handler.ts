@@ -15,7 +15,12 @@ function selectArea(tabId: number) {
   })
 }
 
+function openSidePanel(tabId: number) {
+  chrome.sidePanel.open({ tabId })
+}
+
 export const clickedHandlerMap = {
   detectQRcode: openModal,
   selectArea,
+  sidePanel: openSidePanel,
 }

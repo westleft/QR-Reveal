@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "Infórmanos"
+  },
+  "side_panel_title": {
+    "message": "Historial de Escaneo"
+  },
+  "side_panel_clear_all_history": {
+    "message": "Borrar Todo el Historial"
   }
 }
 

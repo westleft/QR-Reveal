@@ -49,6 +49,12 @@
   },
   "popup_help_link_text": {
     "message": "Problem melden"
+  },
+  "side_panel_title": {
+    "message": "Scan-Verlauf"
+  },
+  "side_panel_clear_all_history": {
+    "message": "Gesamten Verlauf löschen"
   }
 }
 

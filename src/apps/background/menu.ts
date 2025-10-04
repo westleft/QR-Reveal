@@ -23,6 +23,13 @@ export function createMenu() {
   })
 
   chrome.contextMenus.create({
+    id: 'sidePanel',
+    title: getMessage('side_panel_title'),
+    contexts: ['all'],
+    type: 'normal',
+  })
+
+  chrome.contextMenus.create({
     id: 'setting',
     title: getMessage('setting'),
     contexts: ['all'],
