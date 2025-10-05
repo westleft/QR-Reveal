@@ -30,8 +30,8 @@ export function useSelectArea(callback: (base64: string) => void) {
     const endY = e.clientY
 
     const rect: Rect = computeRect(startX, startY, endX, endY)
-    // eslint-disable-next-line no-console
-    console.log('選取框座標:', rect)
+
+    // console.log('選取框座標:', rect)
 
     cleanupAfterSelection(selectionBox, onMouseMove, onMouseUp)
     restoreUserSelect(previousUserSelect)

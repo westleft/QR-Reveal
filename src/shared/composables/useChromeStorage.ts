@@ -30,7 +30,7 @@ export function useChromeStorage() {
     return chrome.storage.local.set({ [key]: value })
   }
 
-  const clearStorage = (key: string) => {
+  const clearStorage = (key: number) => {
     return chrome.storage.local.remove(key)
   }
 
