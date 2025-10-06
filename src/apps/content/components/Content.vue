@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { QrCodeInfo } from '@/shared/types'
+import { useShare } from '@/shared/composables'
 import { copyText } from '@/shared/utils'
 
 const { data } = defineProps<{
   data: QrCodeInfo | null
 }>()
+
+const { share, isSupportShare } = useShare()
 
 const { getMessage } = chrome.i18n
 </script>
@@ -36,6 +39,20 @@ const { getMessage } = chrome.i18n
           </p>
           <div class="modal-info__url-copy" @click="copyText(data?.url || '')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l133.5 0c4.2 0 8.3 1.7 11.3 4.7l58.5 58.5c3 3 4.7 7.1 4.7 11.3L400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-197.5c0-17-6.7-33.3-18.7-45.3L370.7 18.7C358.7 6.7 342.5 0 325.5 0L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-48 0 0 16c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l16 0 0-48-16 0z" /></svg>
+          </div>
+          <div
+            v-if="isSupportShare"
+            class="modal-info__share" @click="share({
+              title: data?.title || 'No title',
+              text: data?.url || 'No url',
+              url: data?.url || 'No url',
+            })"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 640"
+            >
+              <path d="M448 256C501 256 544 213 544 160C544 107 501 64 448 64C395 64 352 107 352 160C352 165.4 352.5 170.8 353.3 176L223.6 248.1C206.7 233.1 184.4 224 160 224C107 224 64 267 64 320C64 373 107 416 160 416C184.4 416 206.6 406.9 223.6 391.9L353.3 464C352.4 469.2 352 474.5 352 480C352 533 395 576 448 576C501 576 544 533 544 480C544 427 501 384 448 384C423.6 384 401.4 393.1 384.4 408.1L254.7 336C255.6 330.8 256 325.5 256 320C256 314.5 255.5 309.2 254.7 304L384.4 231.9C401.3 246.9 423.6 256 448 256z" /></svg>
           </div>
         </div>
       </div>
@@ -166,12 +183,29 @@ const { getMessage } = chrome.i18n
     padding: 4px 12px;
 
     .modal-info__url-text {
-      overflow: auto;
-      margin-right: 32px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
+      width: 100%;
+      margin-right: 60px;
       ::selection {
         color: white;
         background: #007bff;
+      }
+    }
+
+    .modal-info__share {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+
+      svg {
+        width: 90%;
+        opacity: 0.8;
       }
     }
 
