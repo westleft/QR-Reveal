@@ -6,20 +6,18 @@ QR Reveal is a Chrome Extension that lets you instantly detect and reveal QR cod
 No more reaching for your phone — just right-click and scan directly in the browser.
 
 ## 🚀 Features
- * Right-click to scan QR codes on webpages
- * Instantly decode and reveal the content
- * Open links automatically in a new tab
+
+* 🛡️ No Ads
+* 🌍 Multi-language Support
+* 🔎 Preview Before Opening
+*  ⚡ Lightweight
+* 📋 One-click Copy Result
+* 🔐 No Data Collection or Tracking
+* 📤 Share Results
+* 🕒 View History
 
 ## 📥 Installation
 
 Install from [Chrome Web Store](https://chromewebstore.google.com/detail/%E6%8E%83%E7%A2%BC%E5%BF%AB%E8%AE%80-qr-reveal/mkgfigepghcfkgnhlpjlijodchlohhep)
-
-## 💡 Feedback & Issues
-
-Found a bug or have suggestions?
-
-## 👉 Submit an Issue on GitHub
-
-[https://github.com/westleft/QR-Reveal/issues](https://github.com/westleft/QR-Reveal/issues)
 
 
