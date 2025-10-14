@@ -1,21 +1,20 @@
 import type { QrCodeInfo } from '@/shared/types'
 import dayjs from 'dayjs'
+import { onBeforeMount, onUnmounted, ref } from 'vue'
 
-export type StorageData = QrCodeInfo & {
+type StorageData = QrCodeInfo & {
   timestamp?: string
 }
 
 export function useChromeStorage() {
+  const historyData = ref<StorageData[]>([])
+
   const _createUniqueKey = () => {
     return Date.now().toString()
   }
 
   const _createTimestamp = () => {
     return dayjs().format('YYYY-MM-DD hh:mm:ss A')
-  }
-
-  const getStorage = (key: string) => {
-    return chrome.storage.local.get(key)
   }
 
   const getAllStorage = async () => {
@@ -31,12 +30,29 @@ export function useChromeStorage() {
   }
 
   const clearStorage = (key: number) => {
-    return chrome.storage.local.remove(key)
+    delete historyData.value[key as keyof typeof historyData.value]
+    chrome.storage.local.remove(key)
   }
 
   const clearAllStorage = () => {
-    return chrome.storage.local.clear()
+    chrome.storage.local.clear()
+    historyData.value = []
   }
 
-  return { getStorage, getAllStorage, setStorage, clearStorage, clearAllStorage }
+  onBeforeMount(async () => {
+    const result = await getAllStorage()
+    historyData.value = result
+  })
+
+  onUnmounted(() => {
+    historyData.value = []
+  })
+
+  return {
+    getAllStorage,
+    setStorage,
+    clearStorage,
+    clearAllStorage,
+    historyData,
+  }
 }
